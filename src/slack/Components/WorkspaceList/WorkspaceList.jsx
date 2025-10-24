@@ -6,7 +6,7 @@ import { IoAdd } from "react-icons/io5"
 import { IoSearchSharp } from "react-icons/io5"
 import Swal from "sweetalert2"
 
-export default function WorkspaceList() {
+export default function WorkspaceList({ currentWorkspaceId, onWorkspaceSelect }) {
     const { workspaces, handleAddWorkspace } = useContext(WorkspaceContext)
     const [searchWorkspace, setSearchWorkspace] = useState("")
 
@@ -47,14 +47,14 @@ export default function WorkspaceList() {
         })
     }
 
+    const handleWorkspaceClick = (workspace) => {
+        if (onWorkspaceSelect) {
+            onWorkspaceSelect(workspace);
+        }
+    }
+
     return (
         <div className="workspace-list-container">
-            <div className="workspace-header">
-                <h1 className="workspace-title">Espacios de trabajo</h1>
-                <button onClick={handleCreateWorkspace} className="btn-create-workspace">
-                    <IoAdd />
-                </button>
-            </div>
 
             <div className="search-bar">
                 <IoSearchSharp className="search-icon" />
@@ -81,9 +81,17 @@ export default function WorkspaceList() {
                             description={workspace.description}
                             created_at={workspace.created_at}
                             messageCount={workspace.messages.length}
+                            isActive={currentWorkspaceId === workspace.id}
+                            onClick={() => handleWorkspaceClick(workspace)}
                         />
                     ))
                 )}
+            </div>
+            <div className="sidebar-footer">
+                <button onClick={handleCreateWorkspace} className="create-workspace-sidebar-btn">
+                    <IoAdd className="btn-icon" />
+                    <span>Crear workspace</span>
+                </button>
             </div>
         </div>
     )

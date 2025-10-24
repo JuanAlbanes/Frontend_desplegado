@@ -78,9 +78,9 @@ input {
 button[type='submit'] {
     background-color: #611f69;
     color: white;
-    padding: 0.75rem 1.2rem;
+    padding: 20px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
@@ -119,11 +119,11 @@ button[type='submit']:disabled {
     input {
         font-size: 0.9rem;
     }
+}
 
-    button[type='submit'] {
-        width: 100%;
+        button[type='submit'] {
         font-size: 0.9rem;
     }
-}
+
 
 

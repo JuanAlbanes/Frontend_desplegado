@@ -6,11 +6,20 @@ import { MdDelete } from "react-icons/md"
 import { IoChatbubbleEllipses } from "react-icons/io5"
 import Swal from "sweetalert2"
 
-export default function WorkspaceItem({ id, name, description, created_at, messageCount }) {
+export default function WorkspaceItem({ 
+    id, 
+    name, 
+    description, 
+    created_at, 
+    messageCount, 
+    isActive,     
+    onClick          
+}) {
     const { handleDeleteWorkspace } = useContext(WorkspaceContext)
 
     const handleDelete = (e) => {
         e.preventDefault()
+        e.stopPropagation() 
         Swal.fire({
             title: "¿Estás seguro?",
             text: "Esta acción no se puede deshacer",
@@ -35,9 +44,18 @@ export default function WorkspaceItem({ id, name, description, created_at, messa
         })
     }
 
+    const handleItemClick = (e) => {
+        if (onClick) {
+            onClick(); 
+        }
+    }
+
     return (
         <Link to={`/workspace/${id}`} className="workspace-item-link">
-            <div className="workspace-item">
+            <div 
+                className={`workspace-item ${isActive ? 'active' : ''}`}
+                onClick={handleItemClick}
+            >
                 <div className="workspace-icon">
                     <IoChatbubbleEllipses />
                 </div>

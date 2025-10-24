@@ -1,0 +1,64 @@
+@import '../../../normalize/normalize.css';
+
+.workspace-sidebar {
+    padding: 0;
+    color: #ffffff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid #40474d;
+    background: #1a1d21;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.sidebar-workspace-list {
+    flex: 1;
+    padding: 8px;
+}
+
+.workspace-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.workspace-welcome h1 {
+    font-size: 2.5rem;
+    color: #1a1d21;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.workspace-welcome p {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+    .workspace-welcome h1 {
+        font-size: 1.8rem;
+    }
+    
+    .workspace-welcome p {
+        font-size: 1.1rem;
+    }
+}

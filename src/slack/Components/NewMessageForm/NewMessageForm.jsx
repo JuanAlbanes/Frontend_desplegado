@@ -38,7 +38,7 @@ export default function NewMessageForm() {
                 autoComplete="off"
             />
             <button type="submit" className="btn-send" disabled={isSubmitting}>
-                <IoSend />
+                Enviar
             </button>
         </form>
     )
