@@ -1,0 +1,72 @@
+@import "../../../normalize/normalize.css";
+
+.chat-header {
+    height: 70px;
+    background-color: #611f69;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.btn-back {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.btn-back:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+.workspace-header-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #611f69;
+}
+.workspace-header-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.workspace-header-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+.workspace-header-description {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+@media (max-width: 768px) {
+    .chat-header {
+        height: 60px;
+        padding: 0 12px;
+    }
+    .workspace-header-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+    .workspace-header-name {
+        font-size: 16px;
+    }
+    .workspace-header-description {
+        font-size: 12px;
+    }
+}

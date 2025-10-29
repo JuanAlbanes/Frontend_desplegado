@@ -1,0 +1,7 @@
+@import "../../../normalize/normalize.css";
+.chat-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #ffffff;
+}
