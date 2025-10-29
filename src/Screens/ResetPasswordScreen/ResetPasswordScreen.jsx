@@ -41,7 +41,7 @@ export const ResetPasswordScreen = () => {
 
     useEffect(() => {
         if (response && response.ok) {
-            alert('Contraseña reestablecida exitosamente')
+            alert('Contraseña restablecida exitosamente')
             navigate('/login')
         }
     }, [response, navigate])
@@ -61,7 +61,7 @@ export const ResetPasswordScreen = () => {
                 <Link to="/login" className="login-btn">Iniciar Sesión</Link>
             </div>
             <div className='container-reset'>
-                <h1>Reestablecer Contraseña</h1>
+                <h1>Restablecer Contraseña</h1>
                 <form onSubmit={handleSubmit}>
                     <div className='container-email'>
                         <label htmlFor={FORM_FIELDS.EMAIL}>Email:</label>
@@ -99,11 +99,11 @@ export const ResetPasswordScreen = () => {
                         !response
                             ?
                             <button type='submit' disabled={loading}>
-                                {loading ? 'Reestableciendo...' : 'Reestablecer Contraseña'}
+                                {loading ? 'Restableciendo...' : 'Restablecer Contraseña'}
                             </button>
                             :
                             <>
-                                <button type='submit' disabled={true}>Contraseña Reestablecida</button>
+                                <button type='submit' disabled={true}>Contraseña Restablecida</button>
                                 <span style={{ color: 'green' }}>{response.message}</span>
                             </>
                     }
