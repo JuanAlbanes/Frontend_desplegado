@@ -6,10 +6,11 @@
     display: block;
 }
 
-.workspace-item {
-    padding: 16px 12px !important;
-    margin-bottom: 8px !important;
-    border-radius: 8px !important;
+/* ✅ ESTILOS ESPECÍFICOS para WorkspaceItem (componente individual) */
+.workspace-detail-item {
+    padding: 16px 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -21,26 +22,25 @@
     position: relative;
 }
 
-.workspace-item:hover {
-    background-color: #36393f !important;
+.workspace-detail-item:hover {
+    background-color: #36393f;
     border-color: #40474d;
 }
 
-
-.workspace-item.active {
-    background-color: #1264a3 !important;
+.workspace-detail-item.active {
+    background-color: #1264a3;
     border-color: #1264a3;
 }
 
-.workspace-item.active .workspace-name {
-    color: white !important;
+.workspace-detail-item.active .workspace-detail-name {
+    color: white;
 }
 
-.workspace-item.active .workspace-description {
-    color: rgba(255, 255, 255, 0.8) !important;
+.workspace-detail-item.active .workspace-detail-description {
+    color: rgba(255, 255, 255, 0.8);
 }
 
-.workspace-icon {
+.workspace-detail-icon {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
@@ -53,12 +53,12 @@
     font-size: 18px;
 }
 
-.workspace-info {
+.workspace-detail-info {
     flex: 1;
     min-width: 0;
 }
 
-.workspace-name {
+.workspace-detail-name {
     font-weight: 600;
     font-size: 14px;
     color: #ffffff;
@@ -68,7 +68,7 @@
     text-overflow: ellipsis;
 }
 
-.workspace-description {
+.workspace-detail-description {
     font-size: 12px;
     color: #9ca1a6;
     margin-bottom: 4px;
@@ -77,22 +77,22 @@
     text-overflow: ellipsis;
 }
 
-.workspace-meta {
+.workspace-detail-meta {
     display: flex;
     justify-content: space-between;
     font-size: 11px;
     color: #9ca1a6;
 }
 
-.workspace-time {
+.workspace-detail-time {
     font-size: 10px;
 }
 
-.workspace-messages {
+.workspace-detail-messages {
     font-size: 10px;
 }
 
-.btn-delete-workspace {
+.workspace-detail-delete-btn {
     opacity: 0.5;
     transition: all 0.2s ease;
     background: transparent;
@@ -104,165 +104,25 @@
     flex-shrink: 0;
 }
 
-.btn-delete-workspace:hover {
+.workspace-detail-delete-btn:hover {
     opacity: 1;
     color: #e01e5a;
     background: rgba(224, 30, 90, 0.1);
 }
 
-.workspace-item:hover .btn-delete-workspace {
+.workspace-detail-item:hover .workspace-detail-delete-btn {
     opacity: 0.8;
 }
 
-
 @media (max-width: 767px) {
-    .workspace-item {
-        padding: 14px 10px !important;
+    .workspace-detail-item {
+        padding: 14px 10px;
         min-height: 65px;
     }
     
-    .workspace-icon {
+    .workspace-detail-icon {
         width: 36px;
         height: 36px;
         font-size: 16px;
-    }
-}
-
-.workspace-item {
-    position: relative;
-    padding: 16px 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-height: 60px;
-}
-
-.workspace-actions {
-    margin-left: auto;
-    display: flex;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.workspace-item:hover .workspace-actions {
-    opacity: 1;
-}
-
-.btn-delete, .btn-edit {
-    padding: 6px;
-    background: transparent;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #9ca1a6;
-    transition: all 0.2s ease;
-}
-
-.btn-delete:hover {
-    color: #e01e5a;
-    background: rgba(224, 30, 90, 0.1);
-}
-
-.btn-edit:hover {
-    color: #1264a3;
-    background: rgba(18, 100, 163, 0.1);
-}
-
-.workspace-item-link {
-    text-decoration: none;
-    color: inherit;
-}
-.workspace-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-}
-.workspace-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-.workspace-icon {
-    width: 50px;
-    height: 50px;
-    background-color: #611f69;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    color: #ffffff;
-    flex-shrink: 0;
-}
-.workspace-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.workspace-name {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1d1c1d;
-    margin: 0;
-}
-.workspace-description {
-    font-size: 14px;
-    color: #616061;
-    margin: 0;
-}
-.workspace-meta {
-    display: flex;
-    gap: 12px;
-    font-size: 12px;
-    color: #616061;
-    margin-top: 4px;
-}
-.workspace-time,
-.workspace-messages {
-    display: flex;
-    align-items: center;
-}
-.btn-delete-workspace {
-    background-color: transparent;
-    border: none;
-    color: #d33;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.btn-delete-workspace:hover {
-    background-color: #ffe0e0;
-    transform: scale(1.1);
-}
-@media (max-width: 768px) {
-    .workspace-item {
-        padding: 12px;
-    }
-
-    .workspace-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 22px;
-    }
-
-    .workspace-name {
-        font-size: 16px;
-    }
-
-    .workspace-description {
-        font-size: 13px;
     }
 }

@@ -41,6 +41,7 @@
 
 .btn-icon {
     font-size: 16px;
+    color: white;
 }
 
 .search-bar {
@@ -68,7 +69,7 @@
     gap: 4px;
 }
 
-.workspace-item {
+.workspace-list-item {
     display: flex;
     align-items: center;
     padding: 8px 12px;
@@ -76,41 +77,84 @@
     cursor: pointer;
     transition: background-color 0.2s;
     gap: 8px;
+    position: relative;
+    background: #1a1d21;
 }
 
-.workspace-item:hover {
+.workspace-list-item:hover {
     background: #343a41;
 }
 
-.workspace-item.active {
+.workspace-list-item.active {
     background: #611f69;
 }
 
-.workspace-icon {
+.workspace-list-icon {
     font-size: 18px;
     color: #9ca3af;
 }
 
-.workspace-info {
+.workspace-list-info {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-.workspace-name {
+.workspace-list-name {
     font-weight: 500;
     font-size: 14px;
+    color: #ffffff;
 }
 
-.workspace-role {
+.workspace-list-role {
     font-size: 12px;
     color: #9ca3af;
     text-transform: capitalize;
 }
 
-.loading-workspaces,
-.error-workspaces,
-.no-workspaces {
+.workspace-list-actions {
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.workspace-list-item:hover .workspace-list-actions {
+    opacity: 1;
+}
+
+.workspace-list-action-btn {
+    width: 58px;
+    height: 22px;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+    white-space: nowrap;
+}
+
+.workspace-list-action-btn.edit-btn {
+    background: #611f69;
+}
+
+.workspace-list-action-btn.edit-btn:hover {
+    background: #4a154b;
+}
+
+
+.workspace-list-action-btn.delete-btn {
+    background: #eb1e1e;
+}
+
+.workspace-list-action-btn.delete-btn:hover {
+    background: #b91c1c;
+}
+
+.loading-workspaces , .error-workspaces , .no-workspaces {
     padding: 16px;
     text-align: center;
     color: #9ca3af;

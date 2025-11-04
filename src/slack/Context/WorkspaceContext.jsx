@@ -1,10 +1,10 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, useCallback } from "react"
 import { getWorkspaceList, createWorkspace, deleteWorkspace } from "../services/workspaceService"
 
 export const WorkspaceContext = createContext({
     workspaces: [],
     isLoadingWorkspaces: true,
-    loadWorkspaces: async () => {}, // ✅ AÑADIDO: Esta función faltaba
+    loadWorkspaces: async () => {},
     handleAddWorkspace: async (name, description) => { },
     handleDeleteWorkspace: async (workspace_id) => { },
     handleSetWorkspaces: (workspaces) => { },
@@ -14,34 +14,45 @@ const WorkspaceContextProvider = ({ children }) => {
     const [workspaces, setWorkspaces] = useState([])
     const [isLoadingWorkspaces, setIsLoadingWorkspaces] = useState(true)
 
-    // Cargar workspaces al montar el contexto
-    useEffect(() => {
-        loadWorkspaces()
-    }, [])
-
-    const loadWorkspaces = async () => {
+    // ✅ CORREGIDO: Usar useCallback para evitar recreación en cada render
+    const loadWorkspaces = useCallback(async () => {
         try {
             setIsLoadingWorkspaces(true)
             const response = await getWorkspaceList()
-            if (response.data && response.data.workspaces) {
+            
+            // Manejar diferentes estructuras de respuesta
+            if (response && response.data && response.data.workspaces) {
                 setWorkspaces(response.data.workspaces)
+            } else if (response && response.workspaces) {
+                setWorkspaces(response.workspaces)
+            } else {
+                console.warn('Estructura de respuesta inesperada:', response)
+                setWorkspaces([])
             }
         } catch (error) {
             console.error('Error loading workspaces:', error)
+            setWorkspaces([])
         } finally {
             setIsLoadingWorkspaces(false)
         }
-    }
+    }, [])
+
+    // Cargar workspaces al montar el contexto
+    useEffect(() => {
+        loadWorkspaces()
+    }, [loadWorkspaces]) // ✅ Ahora loadWorkspaces es estable
 
     const handleAddWorkspace = async (name, url_image = "") => {
         try {
             const response = await createWorkspace(name, url_image)
-            if (response.ok) {
-                // Recargar la lista completa para incluir el nuevo workspace
+            
+            if (response && response.ok) {
                 await loadWorkspaces()
                 return true
+            } else {
+                console.error('Error en la respuesta del servidor:', response)
+                return false
             }
-            return false
         } catch (error) {
             console.error('Error creating workspace:', error)
             throw error
@@ -51,8 +62,7 @@ const WorkspaceContextProvider = ({ children }) => {
     const handleDeleteWorkspace = async (workspace_id) => {
         try {
             const response = await deleteWorkspace(workspace_id)
-            if (response.ok) {
-                // Actualizar la lista localmente
+            if (response && response.ok) {
                 const updatedWorkspaces = workspaces.filter((w) => w._id !== workspace_id)
                 setWorkspaces(updatedWorkspaces)
                 return true
@@ -73,7 +83,7 @@ const WorkspaceContextProvider = ({ children }) => {
             value={{
                 workspaces,
                 isLoadingWorkspaces,
-                loadWorkspaces, // ✅ AÑADIDO: Exportar la función
+                loadWorkspaces,
                 handleAddWorkspace,
                 handleDeleteWorkspace,
                 handleSetWorkspaces,

@@ -53,21 +53,21 @@ export default function WorkspaceItem({
     return (
         <Link to={`/workspace/${id}`} className="workspace-item-link">
             <div 
-                className={`workspace-item ${isActive ? 'active' : ''}`}
+                className={`workspace-detail-item ${isActive ? 'active' : ''}`}
                 onClick={handleItemClick}
             >
-                <div className="workspace-icon">
+                <div className="workspace-detail-icon">
                     <IoChatbubbleEllipses />
                 </div>
-                <div className="workspace-info">
-                    <h3 className="workspace-name">{name}</h3>
-                    <p className="workspace-description">{description}</p>
-                    <div className="workspace-meta">
-                        <span className="workspace-time">{created_at}</span>
-                        <span className="workspace-messages">{messageCount} mensajes</span>
+                <div className="workspace-detail-info">
+                    <h3 className="workspace-detail-name">{name}</h3>
+                    <p className="workspace-detail-description">{description}</p>
+                    <div className="workspace-detail-meta">
+                        <span className="workspace-detail-time">{created_at}</span>
+                        <span className="workspace-detail-messages">{messageCount} mensajes</span>
                     </div>
                 </div>
-                <button onClick={handleDelete} className="btn-delete-workspace">
+                <button onClick={handleDelete} className="workspace-detail-delete-btn">
                     <MdDelete />
                 </button>
             </div>

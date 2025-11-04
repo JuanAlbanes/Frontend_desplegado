@@ -27,20 +27,30 @@ export const LoginScreen = () => {
         error
     } = useFetch()
 
-    const onLogin = (form_state) => {
-        sendRequest(() => login(
-            form_state[FORM_FIELDS.EMAIL],
-            form_state[FORM_FIELDS.PASSWORD]
-        ))
+    const onLogin = async (form_state) => {
+        try {
+            await sendRequest(() => login(
+                form_state[FORM_FIELDS.EMAIL],
+                form_state[FORM_FIELDS.PASSWORD]
+            ))
+        } catch (error) {
+            // El error ya se maneja en useFetch, pero podemos agregar logging adicional
+            console.error('Login error:', error)
+        }
     }
 
     useEffect(
         () => {
             console.log('Login response:', response)
-            if (response && response.ok) {
+            
+            // ✅ CORREGIDO: Mejor verificación de respuesta exitosa
+            if (response && response.ok === true) {
+                console.log('Login exitoso, redirigiendo...')
                 // El token ya se guardó automáticamente en authService.js
                 // Redirigir a la página principal de workspaces
                 navigate('/workspace')
+            } else if (response && response.ok === false) {
+                console.log('Login fallido:', response.message)
             }
         },
         [response, navigate]
@@ -73,6 +83,7 @@ export const LoginScreen = () => {
                         type='email'
                         onChange={handleInputChange}
                         value={login_form_state[FORM_FIELDS.EMAIL]}
+                        required
                     />
                 </div>
                 <div className='container-password'>
@@ -83,6 +94,7 @@ export const LoginScreen = () => {
                         type='password'
                         onChange={handleInputChange}
                         value={login_form_state[FORM_FIELDS.PASSWORD]}
+                        required
                     />
                 </div>
                 {

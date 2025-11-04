@@ -1,28 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { getWorkspaceList, createWorkspace } from '../../services/workspaceService'
+import React, { useState, useEffect, useContext } from 'react'
+import { getWorkspaceList, createWorkspace, updateWorkspace, deleteWorkspace } from '../../services/workspaceService'
+import { WorkspaceContext } from '../../Context/WorkspaceContext'
 import useFetch from '../../../hooks/useFetch'
 import './WorkspaceList.css'
+
+// ✅ ICONOS PARA EL BOTÓN DE CREAR
 import { IoAdd, IoBusiness } from "react-icons/io5"
+
 import Swal from 'sweetalert2'
 
 export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId }) {
-    const [workspaces, setWorkspaces] = useState([])
+    const { workspaces, loadWorkspaces } = useContext(WorkspaceContext)
     const [searchWorkspace, setSearchWorkspace] = useState("")
     const { loading, error, sendRequest } = useFetch()
 
-    // Cargar workspaces al montar el componente
     useEffect(() => {
-        loadWorkspaces()
-    }, [])
-
-    const loadWorkspaces = async () => {
-        await sendRequest(async () => {
-            const response = await getWorkspaceList()
-            if (response.data && response.data.workspaces) {
-                setWorkspaces(response.data.workspaces)
-            }
-        })
-    }
+        if (workspaces.length === 0) {
+            loadWorkspaces()
+        }
+    }, [workspaces.length, loadWorkspaces])
 
     const handleCreateWorkspace = () => {
         Swal.fire({
@@ -53,8 +49,7 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                             result.value.name, 
                             result.value.url_image
                         )
-                        if (response.ok) {
-                            // Recargar la lista de workspaces
+                        if (response && response.ok) {
                             await loadWorkspaces()
                             Swal.fire({
                                 title: "Workspace creado!",
@@ -62,6 +57,110 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                                 confirmButtonColor: "#611f69",
                                 timer: 1500,
                             })
+                        } else {
+                            throw new Error(response?.message || 'Error al crear workspace')
+                        }
+                    })
+                } catch (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.message,
+                        icon: "error",
+                        confirmButtonColor: "#611f69",
+                    })
+                }
+            }
+        })
+    }
+
+    const handleEditWorkspace = (workspaceItem, event) => {
+        event.stopPropagation()
+        
+        const workspace = workspaceItem.workspace || workspaceItem
+        
+        Swal.fire({
+            title: "Editar workspace",
+            html: `
+                <input id="workspace-name" class="swal2-input" placeholder="Nombre del workspace" value="${workspace.name}">
+                <input id="workspace-image" class="swal2-input" placeholder="URL de imagen (opcional)" value="${workspace.url_image || ''}">
+            `,
+            confirmButtonText: "Guardar",
+            confirmButtonColor: "#611f69",
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            background: "#ffffff",
+            preConfirm: () => {
+                const name = document.getElementById("workspace-name").value
+                const url_image = document.getElementById("workspace-image").value
+                
+                if (!name) {
+                    Swal.showValidationMessage("El nombre del workspace es requerido")
+                }
+                return { name, url_image }
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await sendRequest(async () => {
+                        const response = await updateWorkspace(
+                            workspace._id,
+                            result.value.name, 
+                            result.value.url_image
+                        )
+                        if (response && response.ok) {
+                            await loadWorkspaces()
+                            Swal.fire({
+                                title: "Workspace actualizado!",
+                                icon: "success",
+                                confirmButtonColor: "#611f69",
+                                timer: 1500,
+                            })
+                        } else {
+                            throw new Error(response?.message || 'Error al actualizar workspace')
+                        }
+                    })
+                } catch (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.message,
+                        icon: "error",
+                        confirmButtonColor: "#611f69",
+                    })
+                }
+            }
+        })
+    }
+
+    const handleDeleteWorkspace = (workspaceItem, event) => {
+        event.stopPropagation()
+        
+        const workspace = workspaceItem.workspace || workspaceItem
+        
+        Swal.fire({
+            title: "¿Eliminar workspace?",
+            text: `¿Estás seguro de que quieres eliminar "${workspace.name}"? Esta acción no se puede deshacer.`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+            background: "#ffffff",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await sendRequest(async () => {
+                        const response = await deleteWorkspace(workspace._id)
+                        if (response && response.ok) {
+                            await loadWorkspaces()
+                            Swal.fire({
+                                title: "Workspace eliminado!",
+                                icon: "success",
+                                confirmButtonColor: "#611f69",
+                                timer: 1500,
+                            })
+                        } else {
+                            throw new Error(response?.message || 'Error al eliminar workspace')
                         }
                     })
                 } catch (error) {
@@ -78,14 +177,14 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
 
     const handleWorkspaceClick = (workspace) => {
         if (onWorkspaceSelect) {
-            // La estructura real es workspace.workspace (por el join en el backend)
             const workspaceData = workspace.workspace || workspace
             onWorkspaceSelect(workspaceData)
         }
     }
 
-    const filteredWorkspaces = workspaces.filter((workspace) => {
-        const workspaceName = workspace.workspace ? workspace.workspace.name : workspace.name
+    const filteredWorkspaces = workspaces.filter((workspaceItem) => {
+        const workspace = workspaceItem.workspace || workspaceItem
+        const workspaceName = workspace.name || ''
         return workspaceName.toLowerCase().includes(searchWorkspace.toLowerCase())
     })
 
@@ -133,18 +232,38 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                     filteredWorkspaces.map((workspaceItem) => {
                         const workspace = workspaceItem.workspace || workspaceItem
                         const isActive = currentWorkspaceId === workspace._id
+                        const isAdmin = workspaceItem.role === 'admin'
                         
                         return (
                             <div
                                 key={workspace._id}
-                                className={`workspace-item ${isActive ? 'active' : ''}`}
+                                className={`workspace-list-item ${isActive ? 'active' : ''}`}
                                 onClick={() => handleWorkspaceClick(workspaceItem)}
                             >
-                                <IoBusiness className="workspace-icon" />
-                                <div className="workspace-info">
-                                    <span className="workspace-name">{workspace.name}</span>
-                                    <span className="workspace-role">{workspaceItem.role}</span>
+                                <IoBusiness className="workspace-list-icon" />
+                                <div className="workspace-list-info">
+                                    <span className="workspace-list-name">{workspace.name}</span>
+                                    <span className="workspace-list-role">{workspaceItem.role}</span>
                                 </div>
+                                
+                                {isAdmin && (
+                                    <div className="workspace-list-actions">
+                                        <button 
+                                            className="workspace-list-action-btn edit-btn"
+                                            onClick={(e) => handleEditWorkspace(workspaceItem, e)}
+                                            title="Editar workspace"
+                                        >
+                                            Editar
+                                        </button>
+                                        <button 
+                                            className="workspace-list-action-btn delete-btn"
+                                            onClick={(e) => handleDeleteWorkspace(workspaceItem, e)}
+                                            title="Eliminar workspace"
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         )
                     })

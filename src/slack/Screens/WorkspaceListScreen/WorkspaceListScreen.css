@@ -27,8 +27,8 @@
 .sidebar-workspace-list {
     flex: 1;
     padding: 8px;
+    overflow-y: auto;
 }
-
 .workspace-welcome {
     display: flex;
     flex-direction: column;
@@ -51,52 +51,6 @@
     font-size: 1.2rem;
     color: #666;
     line-height: 1.6;
-}
-
-.workspace-sidebar {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-header {
-    padding: 16px;
-    border-bottom: 1px solid #343a41;
-}
-
-.sidebar-header h3 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.sidebar-workspace-list {
-    flex: 1;
-    overflow-y: auto;
-}
-
-.workspace-welcome {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    text-align: center;
-    padding: 40px;
-    color: #ffffff;
-}
-
-.workspace-welcome h1 {
-    font-size: 2rem;
-    margin-bottom: 16px;
-    color: #ffffff;
-}
-
-.workspace-welcome p {
-    font-size: 1.1rem;
-    color: #9ca3af;
-    margin-bottom: 24px;
 }
 
 .no-workspaces-message {

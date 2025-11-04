@@ -10,16 +10,26 @@ export default function WorkspaceListScreen() {
     const { isLoadingWorkspaces, workspaces, loadWorkspaces } = useContext(WorkspaceContext)
     const navigate = useNavigate()
 
-    // ✅ Asegurar que se carguen los workspaces al montar el componente
+    // ✅ CORREGIDO: Mejorar la carga de workspaces
     useEffect(() => {
-        if (!workspaces || workspaces.length === 0) {
-            loadWorkspaces()
+        const initializeWorkspaces = async () => {
+            try {
+                await loadWorkspaces()
+            } catch (error) {
+                console.error('Error loading workspaces:', error)
+            }
         }
-    }, [])
+
+        initializeWorkspaces()
+    }, [loadWorkspaces])
 
     const handleWorkspaceSelect = (workspace) => {
         // ✅ CORREGIDO: Usar _id en lugar de id (Mongoose usa _id)
-        navigate(`/workspace/${workspace._id}`)
+        if (workspace && workspace._id) {
+            navigate(`/workspace/${workspace._id}`)
+        } else {
+            console.error('Workspace no válido:', workspace)
+        }
     }
 
     const sidebarContent = (
@@ -37,7 +47,14 @@ export default function WorkspaceListScreen() {
     )
 
     if (isLoadingWorkspaces) {
-        return <LoaderSpinner />
+        return (
+            <SlackLayout sidebarContent={sidebarContent}>
+                <div className="workspace-welcome">
+                    <LoaderSpinner />
+                    <p>Cargando workspaces...</p>
+                </div>
+            </SlackLayout>
+        )
     }
 
     return (
@@ -46,10 +63,17 @@ export default function WorkspaceListScreen() {
                 <h1>Selecciona un workspace para comenzar</h1>
                 <p>Elige uno de la sidebar o crea uno nuevo</p>
                 
-                {/* ✅ Mensaje adicional si no hay workspaces */}
+                {/* ✅ CORREGIDO: Mensaje mejorado cuando no hay workspaces */}
                 {workspaces && workspaces.length === 0 && (
                     <div className="no-workspaces-message">
                         <p>No tienes workspaces aún. ¡Crea uno nuevo usando el botón "+" en la sidebar!</p>
+                    </div>
+                )}
+                
+                {/* ✅ AÑADIDO: Debug info para desarrollo */}
+                {process.env.NODE_ENV === 'development' && (
+                    <div style={{ marginTop: '20px', fontSize: '12px', color: '#666' }}>
+                        <p> {workspaces ? workspaces.length : 0} workspaces cargados</p>
                     </div>
                 )}
             </div>
