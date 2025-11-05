@@ -5,129 +5,194 @@ import { getToken } from "../../services/authService.js"
 export async function getChannelsByWorkspace(workspace_id) {
     const token = getToken()
     
-    const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}/api/channels/workspace/${workspace_id}`,
-        {
-            method: HTTP_METHODS.GET,
-            headers: {
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
-                Authorization: `Bearer ${token}`
+    try {
+        const response_http = await fetch(
+            `${ENVIRONMENT.URL_API}/api/channels/workspace/${workspace_id}`,
+            {
+                method: HTTP_METHODS.GET,
+                headers: {
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+                    Authorization: `Bearer ${token}`
+                }
             }
+        )
+
+        // Verificar si la respuesta es JSON válido
+        const contentType = response_http.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+            const textResponse = await response_http.text()
+            throw new Error(`La respuesta del servidor no es JSON: ${textResponse.substring(0, 100)}`)
         }
-    )
 
-    const response_data = await response_http.json()
+        const response_data = await response_http.json()
 
-    if (!response_data.ok) {
-        throw new Error(response_data.message)
+        if (!response_http.ok) {
+            throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
+        }
+
+        return response_data
+
+    } catch (error) {
+        console.error('Error en getChannelsByWorkspace:', error)
+        throw error
     }
-
-    return response_data
 }
 
 export async function getChannelById(channel_id) {
     const token = getToken()
     
-    const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}/api/channels/${channel_id}`,
-        {
-            method: HTTP_METHODS.GET,
-            headers: {
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
-                Authorization: `Bearer ${token}`
+    try {
+        const response_http = await fetch(
+            `${ENVIRONMENT.URL_API}/api/channels/${channel_id}`,
+            {
+                method: HTTP_METHODS.GET,
+                headers: {
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+                    Authorization: `Bearer ${token}`
+                }
             }
+        )
+
+        // Verificar si la respuesta es JSON válido
+        const contentType = response_http.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+            const textResponse = await response_http.text()
+            throw new Error(`La respuesta del servidor no es JSON: ${textResponse.substring(0, 100)}`)
         }
-    )
 
-    const response_data = await response_http.json()
+        const response_data = await response_http.json()
 
-    if (!response_data.ok) {
-        throw new Error(response_data.message)
+        if (!response_http.ok) {
+            throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
+        }
+
+        return response_data
+
+    } catch (error) {
+        console.error('Error en getChannelById:', error)
+        throw error
     }
-
-    return response_data
 }
 
 export async function createChannel(name, description, workspace_id, isPrivate = false) {
     const token = getToken()
     
-    const channelData = {
-        name: name,
-        description: description,
-        workspace_id: workspace_id,
-        private: isPrivate
-    }
-
-    const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}/api/channels`,
-        {
-            method: HTTP_METHODS.POST,
-            headers: {
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(channelData)
+    try {
+        const channelData = {
+            name: name,
+            description: description,
+            workspace_id: workspace_id,
+            private: isPrivate
         }
-    )
 
-    const response_data = await response_http.json()
+        const response_http = await fetch(
+            `${ENVIRONMENT.URL_API}/api/channels`,
+            {
+                method: HTTP_METHODS.POST,
+                headers: {
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(channelData)
+            }
+        )
 
-    if (!response_data.ok) {
-        throw new Error(response_data.message)
+        // Verificar si la respuesta es JSON válido
+        const contentType = response_http.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+            const textResponse = await response_http.text()
+            throw new Error(`La respuesta del servidor no es JSON: ${textResponse.substring(0, 100)}`)
+        }
+
+        const response_data = await response_http.json()
+
+        if (!response_http.ok) {
+            throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
+        }
+
+        return response_data
+
+    } catch (error) {
+        console.error('Error en createChannel:', error)
+        throw error
     }
-
-    return response_data
 }
 
 export async function updateChannel(channel_id, name, description, isPrivate) {
     const token = getToken()
     
-    const channelData = {
-        name: name,
-        description: description,
-        private: isPrivate
-    }
-
-    const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}/api/channels/${channel_id}`,
-        {
-            method: HTTP_METHODS.PUT,
-            headers: {
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
-                Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify(channelData)
+    try {
+        const channelData = {
+            name: name,
+            description: description,
+            private: isPrivate
         }
-    )
 
-    const response_data = await response_http.json()
+        const response_http = await fetch(
+            `${ENVIRONMENT.URL_API}/api/channels/${channel_id}`,
+            {
+                method: HTTP_METHODS.PUT,
+                headers: {
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(channelData)
+            }
+        )
 
-    if (!response_data.ok) {
-        throw new Error(response_data.message)
+        // Verificar si la respuesta es JSON válido
+        const contentType = response_http.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+            const textResponse = await response_http.text()
+            throw new Error(`La respuesta del servidor no es JSON: ${textResponse.substring(0, 100)}`)
+        }
+
+        const response_data = await response_http.json()
+
+        if (!response_http.ok) {
+            throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
+        }
+
+        return response_data
+
+    } catch (error) {
+        console.error('Error en updateChannel:', error)
+        throw error
     }
-
-    return response_data
 }
 
 export async function deleteChannel(channel_id) {
     const token = getToken()
     
-    const response_http = await fetch(
-        `${ENVIRONMENT.URL_API}/api/channels/${channel_id}`,
-        {
-            method: HTTP_METHODS.DELETE,
-            headers: {
-                [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
-                Authorization: `Bearer ${token}`
+    try {
+        const response_http = await fetch(
+            `${ENVIRONMENT.URL_API}/api/channels/${channel_id}`,
+            {
+                method: HTTP_METHODS.DELETE,
+                headers: {
+                    [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
+                    Authorization: `Bearer ${token}`
+                }
             }
+        )
+
+        // Verificar si la respuesta es JSON válido
+        const contentType = response_http.headers.get('content-type')
+        if (!contentType || !contentType.includes('application/json')) {
+            const textResponse = await response_http.text()
+            throw new Error(`La respuesta del servidor no es JSON: ${textResponse.substring(0, 100)}`)
         }
-    )
 
-    const response_data = await response_http.json()
+        const response_data = await response_http.json()
 
-    if (!response_data.ok) {
-        throw new Error(response_data.message)
+        if (!response_http.ok) {
+            throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
+        }
+
+        return response_data
+
+    } catch (error) {
+        console.error('Error en deleteChannel:', error)
+        throw error
     }
-
-    return response_data
 }

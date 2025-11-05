@@ -78,6 +78,9 @@
     cursor: pointer;
     transition: background-color 0.2s;
     border-left: 3px solid transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .channel-item:hover {
@@ -87,6 +90,11 @@
 .channel-item.active {
     background: #e8e8e8;
     border-left-color: #611f69;
+}
+
+.channel-info {
+    flex: 1;
+    cursor: pointer;
 }
 
 .channel-name {
@@ -125,4 +133,43 @@
 
 .btn-icon {
     font-size: 16px;
+}
+
+/* NUEVOS ESTILOS PARA ACCIONES DE CANAL */
+.channel-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.channel-item:hover .channel-actions {
+    opacity: 1;
+}
+
+.channel-action-btn {
+    background: none;
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #616061;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.channel-action-btn:hover {
+    background: #e8e8e8;
+}
+
+.edit-btn:hover {
+    color: #611f69;
+}
+
+.delete-btn:hover {
+    color: #d14545;
+    background: #ffe6e6;
 }

@@ -1,60 +1,76 @@
 import { useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router"
-import { MessagesContext } from "../../Context/MessagesContext"
-import { WorkspaceContext } from "../../Context/WorkspaceContext"
-import ChatHeader from "../../Components/ChatHeader/ChatHeader"
-import Chat from "../../Components/Chat/Chat"
-import NewMessageForm from "../../Components/NewMessageForm/NewMessageForm"
-import WorkspaceList from "../../Components/WorkspaceList/WorkspaceList"
-import ChannelList from "../../Components/ChannelList/ChannelList"
-import LoaderSpinner from "../../Components/LoaderSpinner/LoaderSpinner"
-import SlackLayout from "../../Components/Layout/SlackLayout"
+import { MessagesContext } from "../../context/MessagesContext"
+import { WorkspaceContext } from "../../context/WorkspaceContext"
+import ChatHeader from "../../components/ChatHeader/ChatHeader"
+import Chat from "../../components/Chat/Chat"
+import NewMessageForm from "../../components/NewMessageForm/NewMessageForm"
+import WorkspaceList from "../../components/WorkspaceList/WorkspaceList"
+import ChannelList from "../../components/ChannelList/ChannelList"
+import LoaderSpinner from "../../components/LoaderSpinner/LoaderSpinner"
+import SlackLayout from "../../components/Layout/SlackLayout"
 import "./ChatScreen.css"
 
 export default function ChatScreen() {
     const { workspace_id } = useParams()
     const { loadMessages, isMessagesLoading, currentChannelId } = useContext(MessagesContext)
-    const { workspaces } = useContext(WorkspaceContext)
+    const { workspaces, loadWorkspaces } = useContext(WorkspaceContext)
     const navigate = useNavigate()
-    const [activeTab, setActiveTab] = useState('workspaces') // 'workspaces' o 'channels'
+    const [activeTab, setActiveTab] = useState('workspaces')
+    const [error, setError] = useState(null)
 
-    // Encontrar el workspace actual usando _id (MongoDB) o id (mock)
-    const currentWorkspace = workspaces.find((w) => 
-        w._id === workspace_id || w.id === Number(workspace_id)
-    )
+    // Cargar workspaces si no están cargados
+    useEffect(() => {
+        if (workspaces.length === 0 && loadWorkspaces) {
+            loadWorkspaces().catch(err => {
+                console.error('Error cargando workspaces:', err)
+                setError('Error al cargar los workspaces')
+            })
+        }
+    }, [workspaces.length, loadWorkspaces])
+
+    // Encontrar el workspace actual usando _id (MongoDB)
+    const currentWorkspace = workspaces.find((w) => w._id === workspace_id)
 
     const handleWorkspaceSelect = (workspace) => {
-        const workspaceId = workspace._id || workspace.id
+        const workspaceId = workspace._id
         navigate(`/workspace/${workspaceId}`)
-        // Al cambiar de workspace, resetear la selección de canal
         setActiveTab('channels')
+        setError(null) // Limpiar error al cambiar de workspace
     }
 
     const handleChannelSelect = (channel) => {
-        // El channel selection ya maneja la carga de mensajes automáticamente
         setActiveTab('channels')
+        setError(null) // Limpiar error al seleccionar canal
     }
 
-    // Cargar mensajes cuando se selecciona un workspace (sin canal específico)
+    // Manejar errores de carga
     useEffect(() => {
-        if (workspace_id && !currentChannelId) {
-            // Solo cargar mensajes si hay un canal seleccionado
-            // Por ahora, no cargamos mensajes hasta que se seleccione un canal
+        if (error) {
+            console.error('Error en ChatScreen:', error)
         }
-    }, [workspace_id, currentChannelId])
+    }, [error])
 
     const sidebarContent = (
         <div className="chat-sidebar">
             <div className="sidebar-tabs">
                 <button 
                     className={`tab-button ${activeTab === 'workspaces' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('workspaces')}
+                    onClick={() => {
+                        setActiveTab('workspaces')
+                        setError(null)
+                    }}
                 >
                     Workspaces
                 </button>
                 <button 
                     className={`tab-button ${activeTab === 'channels' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('channels')}
+                    onClick={() => {
+                        if (workspace_id) {
+                            setActiveTab('channels')
+                            setError(null)
+                        }
+                    }}
                     disabled={!workspace_id}
                 >
                     Canales
@@ -62,6 +78,13 @@ export default function ChatScreen() {
             </div>
             
             <div className="sidebar-content">
+                {error && (
+                    <div className="error-message">
+                        <p>{error}</p>
+                        <button onClick={() => setError(null)}>Cerrar</button>
+                    </div>
+                )}
+                
                 {activeTab === 'workspaces' ? (
                     <WorkspaceList 
                         currentWorkspaceId={workspace_id} 
@@ -72,6 +95,7 @@ export default function ChatScreen() {
                         <ChannelList 
                             workspaceId={workspace_id}
                             onChannelSelect={handleChannelSelect}
+                            onError={setError}
                         />
                     ) : (
                         <div className="no-workspace-selected">
@@ -104,6 +128,11 @@ export default function ChatScreen() {
                             <p>Selecciona un canal para empezar a chatear</p>
                             {!workspace_id && (
                                 <p>O selecciona un workspace primero</p>
+                            )}
+                            {error && (
+                                <div className="error-banner">
+                                    <p>Error: {error}</p>
+                                </div>
                             )}
                         </div>
                     </div>
