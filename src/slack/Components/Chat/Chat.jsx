@@ -1,10 +1,23 @@
 import { useContext } from "react"
 import { MessagesContext } from "../../Context/MessagesContext"
+import { UserContext } from "../../Context/UserContext"
 import Message from "../Message/Message"
 import "./Chat.css"
 
 export default function Chat() {
     const { messages, isMessagesLoading } = useContext(MessagesContext)
+    const { currentUser } = useContext(UserContext)
+
+    // Función para determinar si el mensaje es del usuario actual
+    const isMyMessage = (message) => {
+        if (!currentUser) return false
+        
+        // Diferentes formas en que el backend puede identificar el usuario
+        return  currentUser._id === message.user_id || 
+                currentUser._id === message.user?._id ||
+                currentUser._id === message.emisor_id ||
+                currentUser.email === message.user?.email
+    }
 
     if (isMessagesLoading) {
         return (
@@ -35,7 +48,7 @@ export default function Chat() {
                     })}
                     texto={message.texto || message.content}
                     status={message.status}
-                    isMyMessage={message.isMyMessage}
+                    isMyMessage={isMyMessage(message)} 
                 />
             ))}
         </div>

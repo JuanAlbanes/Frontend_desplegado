@@ -32,9 +32,16 @@ const MessagesContextProvider = ({ children }) => {
         setCurrentChannelId(channel_id)
         
         try {
-            // Usar el service actualizado que ahora requiere channel_id
             const workspaceMessages = await getMessagesByWorkspaceId(workspace_id, channel_id)
-            setMessages(workspaceMessages)
+            
+            // CORREGIDO: Normalizar los IDs para que todos los mensajes tengan tanto _id como id
+            const normalizedMessages = workspaceMessages.map(message => ({
+                ...message,
+                id: message.id || message._id, // Asegurar que siempre haya un campo `id`
+                _id: message._id || message.id  // Asegurar que siempre haya un campo `_id`
+            }))
+            
+            setMessages(normalizedMessages)
         } catch (error) {
             console.error('Error loading messages:', error)
             setMessages([])
@@ -63,7 +70,10 @@ const MessagesContextProvider = ({ children }) => {
         try {
             const success = await deleteMessageFromWorkspace(workspace_id, message_id)
             if (success) {
-                setMessages((prev) => prev.filter((m) => m.id !== message_id))
+                setMessages((prev) => prev.filter((m) => 
+                    // CORREGIDO: Buscar por ambos campos _id e id
+                    (m._id !== message_id && m.id !== message_id)
+                ))
             }
         } catch (error) {
             console.error('Error deleting message:', error)
@@ -77,7 +87,8 @@ const MessagesContextProvider = ({ children }) => {
             if (updatedMessage) {
                 setMessages((prev) => 
                     prev.map((m) => 
-                        m.id === message_id ? updatedMessage : m
+                        // CORREGIDO: Buscar por ambos campos _id e id
+                        ((m._id === message_id || m.id === message_id) ? updatedMessage : m)
                     )
                 )
             }
