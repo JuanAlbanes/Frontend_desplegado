@@ -210,3 +210,28 @@
     font-style: italic;
     line-height: 1.3;
 }
+
+
+.workspace-list-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid #343a41;
+}
+
+.workspace-list-icon.fallback-icon {
+    display: none;
+    font-size: 18px;
+    color: #9ca3af;
+}
+
+
+.workspace-list-item > :first-child {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}

@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router"
 import "./ChatHeader.css"
 import { FaArrowLeft } from "react-icons/fa6"
-import { IoChatbubbleEllipses } from "react-icons/io5"
+import { IoChatbubbleEllipses, IoBusiness } from "react-icons/io5"
 import { useContext, useState, useEffect } from "react"
 import { MessagesContext } from "../../context/MessagesContext"
 import { getChannelById } from "../../services/channelService"
@@ -54,12 +54,30 @@ export default function ChatHeader({ workspace }) {
             <Link to="/home" className="btn-back">
                 <FaArrowLeft />
             </Link>
+            
+            {/* MOSTRAR IMAGEN DEL WORKSPACE O ICONO POR DEFECTO */}
             <div className="workspace-header-icon">
-                <IoChatbubbleEllipses />
+                {workspace.url_image ? (
+                    <img 
+                        src={workspace.url_image} 
+                        alt={workspace.name}
+                        className="workspace-header-image"
+                        onError={(e) => {
+                            // Si la imagen falla al cargar, mostrar el icono por defecto
+                            e.target.style.display = 'none'
+                        }}
+                    />
+                ) : (
+                    <IoBusiness className="workspace-header-default-icon" />
+                )}
             </div>
+            
             <div className="workspace-header-info">
                 <h2 className="workspace-header-name">
-                    {currentChannel && `  #${currentChannel.name}`}
+                    {currentChannel 
+                        ? `#${currentChannel.name}` 
+                        : workspace.name
+                    }
                 </h2>
                 <p className="workspace-header-description">
                     {currentChannel 
