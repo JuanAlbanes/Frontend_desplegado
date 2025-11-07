@@ -13,7 +13,8 @@ export async function getChannelsByWorkspace(workspace_id) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 
@@ -52,7 +53,8 @@ export async function getChannelById(workspace_id, channel_id) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 
@@ -99,7 +101,8 @@ export async function createChannel(name, description, workspace_id, isPrivate =
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(channelData)
+                body: JSON.stringify(channelData),
+                credentials: 'include'
             }
         )
 
@@ -145,7 +148,8 @@ export async function updateChannel(workspace_id, channel_id, name, description,
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(channelData)
+                body: JSON.stringify(channelData),
+                credentials: 'include'
             }
         )
 
@@ -184,7 +188,8 @@ export async function deleteChannel(workspace_id, channel_id) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 

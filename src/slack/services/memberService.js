@@ -22,7 +22,8 @@ export async function inviteMemberToWorkspace(workspaceId, email) {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(inviteData)
+                body: JSON.stringify(inviteData),
+                credentials: 'include'
             }
         )
 

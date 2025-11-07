@@ -19,7 +19,8 @@ export async function register(name, email, password, invitationWorkspaceId = nu
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON
                 },
-                body: JSON.stringify(usuario)
+                body: JSON.stringify(usuario),
+                credentials: 'include'
             }
         )
         
@@ -51,7 +52,8 @@ export async function login(email, password) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
+                credentials: 'include'
             }
         )
         
@@ -90,7 +92,8 @@ export async function resetPassword(email, newPassword) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 },
-                body: JSON.stringify({ email, newPassword })
+                body: JSON.stringify({ email, newPassword }),
+                credentials: 'include'
             }
         )
         

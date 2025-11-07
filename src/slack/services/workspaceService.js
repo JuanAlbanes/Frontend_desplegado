@@ -18,7 +18,8 @@ export async function getWorkspaceList() {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 
@@ -56,7 +57,8 @@ export async function getWorkspaceById(workspace_id) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 
@@ -100,7 +102,8 @@ export async function createWorkspace(name, url_image = "") {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(workspaceData)
+                body: JSON.stringify(workspaceData),
+                credentials: 'include'
             }
         )
 
@@ -144,7 +147,8 @@ export async function updateWorkspace(workspace_id, name, url_image) {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify(workspaceData)
+                body: JSON.stringify(workspaceData),
+                credentials: 'include'
             }
         )
 
@@ -180,7 +184,8 @@ export async function deleteWorkspace(workspace_id) {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 
@@ -216,7 +221,8 @@ export async function getAllWorkspaces() {
                 headers: {
                     [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                     Authorization: `Bearer ${token}`
-                }
+                },
+                credentials: 'include'
             }
         )
 

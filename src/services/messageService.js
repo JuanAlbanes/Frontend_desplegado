@@ -12,7 +12,8 @@ export async function getMessagesByChannel(workspace_id, channelId) {
             headers: {
                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 Authorization: `Bearer ${token}`
-            }
+            },
+            credentials: 'include'
         }
     )
 
@@ -41,7 +42,8 @@ export async function sendMessage(channelId, content) {
                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(message)
+            body: JSON.stringify(message),
+            credentials: 'include'
         }
     )
 
@@ -65,7 +67,8 @@ export async function updateMessage(messageId, content) {
                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify({ text: content })
+            body: JSON.stringify({ text: content }),
+            credentials: 'include'
         }
     )
 
@@ -88,7 +91,8 @@ export async function deleteMessage(messageId) {
             headers: {
                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 Authorization: `Bearer ${token}`
-            }
+            },
+            credentials: 'include'
         }
     )
 
@@ -111,7 +115,8 @@ export async function getMessageById(messageId) {
             headers: {
                 [HEADERS.CONTENT_TYPE]: CONTENT_TYPE_VALUES.JSON,
                 Authorization: `Bearer ${token}`
-            }
+            },
+            credentials: 'include'
         }
     )
 
