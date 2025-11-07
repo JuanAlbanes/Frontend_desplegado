@@ -1,12 +1,15 @@
 import ENVIRONMENT from "../config/environment.js"
 import { CONTENT_TYPE_VALUES, HEADERS, HTTP_METHODS } from "../constants/http.js"
 
-export async function register(name, email, password) {
+export async function register(name, email, password, invitationWorkspaceId = null) { 
     const usuario = {
         username: name,  
         email,
-        password
+        password,
+        invitationWorkspaceId  
     }
+    
+    console.log('📝 Enviando registro con datos:', usuario)
     
     try {
         const response_http = await fetch(
@@ -39,6 +42,8 @@ export async function register(name, email, password) {
 
 export async function login(email, password) {
     try {
+        console.log('🔐 Iniciando proceso de login para:', email)
+        
         const response = await fetch(
             `${ENVIRONMENT.URL_API}/api/auth/login`,
             {
@@ -52,8 +57,7 @@ export async function login(email, password) {
         
         const response_data = await response.json()
         
-        console.log('Login response:', response_data) 
-        
+        console.log('📨 Login response:', response_data) 
         
         if (!response.ok) {
             throw new Error(response_data.message || `Error HTTP: ${response.status}`)
@@ -65,14 +69,14 @@ export async function login(email, password) {
         
         if (response_data.data && response_data.data.authorization_token) {
             localStorage.setItem('token', response_data.data.authorization_token)
-            console.log('Token guardado correctamente')
+            console.log('✅ Token guardado correctamente')
         } else {
-            console.warn('No se recibió token en la respuesta:', response_data)
+            console.warn('⚠️ No se recibió token en la respuesta:', response_data)
         }
         
         return response_data
     } catch (error) {
-        console.error('Error in login:', error)
+        console.error('❌ Error in login:', error)
         throw error
     }
 }
