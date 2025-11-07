@@ -147,7 +147,6 @@
     height: 16px;
 }
 
-
 .workspace-list-action-btn.invite-btn {
     color: #611f69;
     background-color: rgba(97, 31, 105, 0.1);
@@ -157,7 +156,6 @@
     background-color: rgba(97, 31, 105, 0.3);
     color: #ffffff;
 }
-
 
 .workspace-list-action-btn.edit-btn {
     color: #1d9bd1;
@@ -169,7 +167,6 @@
     color: #ffffff;
 }
 
-
 .workspace-list-action-btn.delete-btn {
     color: #e01e5a;
     background-color: rgba(224, 30, 90, 0.1);
@@ -180,7 +177,7 @@
     color: #ffffff;
 }
 
-.loading-workspaces , .error-workspaces , .no-workspaces {
+.loading-workspaces, .error-workspaces, .no-workspaces {
     padding: 16px;
     text-align: center;
     color: #9ca3af;
@@ -211,7 +208,6 @@
     line-height: 1.3;
 }
 
-
 .workspace-list-image {
     width: 32px;
     height: 32px;
@@ -226,7 +222,6 @@
     color: #9ca3af;
 }
 
-
 .workspace-list-item > :first-child {
     width: 50px;
     height: 50px;
@@ -234,4 +229,453 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+}
+
+/* ===== RESPONSIVE MODALS PARA WORKSPACES ===== */
+.workspace-modal.swal2-popup,
+.invite-modal.swal2-popup {
+    max-width: 95vw;
+    margin: 10px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: auto;
+}
+
+.workspace-modal .swal2-title,
+.invite-modal .swal2-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #1d1c1d;
+}
+
+.workspace-modal .swal2-html-container,
+.invite-modal .swal2-html-container {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #616061;
+    padding: 0 10px;
+}
+
+.workspace-modal .swal2-input,
+.invite-modal .swal2-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.workspace-modal .swal2-confirm,
+.workspace-modal .swal2-cancel,
+.invite-modal .swal2-confirm,
+.invite-modal .swal2-cancel {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    margin: 0 5px;
+    min-width: 80px;
+    transition: all 0.2s ease;
+}
+
+.workspace-modal .swal2-confirm,
+.invite-modal .swal2-confirm {
+    background-color: #611f69;
+}
+
+.workspace-modal .swal2-confirm:hover,
+.invite-modal .swal2-confirm:hover {
+    background-color: #4a154b;
+}
+
+.workspace-modal .swal2-cancel,
+.invite-modal .swal2-cancel {
+    background-color: #6b7280;
+}
+
+.workspace-modal .swal2-cancel:hover,
+.invite-modal .swal2-cancel:hover {
+    background-color: #4b5563;
+}
+
+/* Invite modal specific styles */
+.invite-modal .invite-modal-content {
+    text-align: center;
+}
+
+.invite-modal .invite-description {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #616061;
+}
+
+.invite-modal .invite-note {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #868486;
+    font-style: italic;
+}
+
+/* ===== MEDIA QUERIES PARA WORKSPACE MODALS ===== */
+
+/* Tablets and small screens */
+@media (max-width: 768px) {
+    .workspace-modal.swal2-popup,
+    .invite-modal.swal2-popup {
+        max-width: 90vw;
+        margin: 20px auto;
+    }
+    
+    .workspace-modal .swal2-title,
+    .invite-modal .swal2-title {
+        font-size: 1.3rem;
+    }
+    
+    .workspace-modal .swal2-input,
+    .invite-modal .swal2-input {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+    
+    .workspace-modal .swal2-confirm,
+    .workspace-modal .swal2-cancel,
+    .invite-modal .swal2-confirm,
+    .invite-modal .swal2-cancel {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        min-width: 70px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 540px) {
+    .workspace-list-container {
+        padding: 12px;
+    }
+    
+    .workspace-list-header {
+        margin-bottom: 12px;
+    }
+    
+    .workspace-list-header h3 {
+        font-size: 14px;
+        margin: 0 0 0 50px;
+    }
+    
+    .create-workspace-btn {
+        padding: 5px;
+    }
+    
+    .btn-icon {
+        font-size: 14px;
+    }
+    
+    .search-bar {
+        margin-bottom: 12px;
+    }
+    
+    .search-bar .input {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    .workspace-list-item {
+        padding: 6px 10px;
+    }
+    
+    .workspace-list-name {
+        font-size: 13px;
+    }
+    
+    .workspace-list-role {
+        font-size: 11px;
+    }
+    
+    .workspace-list-action-btn {
+        padding: 4px;
+        width: 24px;
+        height: 24px;
+    }
+    
+    .workspace-list-action-btn .action-icon {
+        width: 14px;
+        height: 14px;
+    }
+    
+    /* Modal responsive para móviles */
+    .workspace-modal.swal2-popup,
+    .invite-modal.swal2-popup {
+        max-width: 95vw;
+        margin: 10px;
+        border-radius: 8px;
+    }
+    
+    .workspace-modal .swal2-title,
+    .invite-modal .swal2-title {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+    
+    .workspace-modal .swal2-html-container,
+    .invite-modal .swal2-html-container {
+        font-size: 0.9rem;
+    }
+    
+    .workspace-modal .swal2-input,
+    .invite-modal .swal2-input {
+        padding: 10px;
+        font-size: 0.9rem;
+        margin: 6px 0;
+    }
+    
+    .workspace-modal .swal2-confirm,
+    .workspace-modal .swal2-cancel,
+    .invite-modal .swal2-confirm,
+    .invite-modal .swal2-cancel {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        min-width: 65px;
+        margin: 0 3px;
+    }
+    
+    .invite-modal .invite-description {
+        font-size: 0.9rem;
+    }
+    
+    .invite-modal .invite-note {
+        font-size: 0.8rem;
+    }
+}
+
+/* Small mobile phones */
+@media (max-width: 420px) {
+    .workspace-list-container {
+        padding: 10px;
+    }
+    
+    .workspace-list-header {
+        margin-bottom: 10px;
+    }
+    
+    .workspace-list-header h3 {
+        font-size: 13px;
+        margin: 0 0 0 50px;
+    }
+    
+    .create-workspace-btn {
+        padding: 4px;
+    }
+    
+    .search-bar {
+        margin-bottom: 10px;
+    }
+    
+    .search-bar .input {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+    
+    .workspace-list-item {
+        padding: 5px 8px;
+        gap: 6px;
+    }
+    
+    .workspace-list-item > :first-child {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .workspace-list-image {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .workspace-list-icon {
+        font-size: 16px;
+    }
+    
+    .workspace-list-name {
+        font-size: 12px;
+    }
+    
+    .workspace-list-role {
+        font-size: 10px;
+    }
+    
+    /* Modal responsive para móviles pequeños */
+    .workspace-modal.swal2-popup,
+    .invite-modal.swal2-popup {
+        max-width: 98vw;
+        margin: 5px;
+    }
+    
+    .workspace-modal .swal2-title,
+    .invite-modal .swal2-title {
+        font-size: 1.1rem;
+    }
+    
+    .workspace-modal .swal2-input,
+    .invite-modal .swal2-input {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+    
+    .workspace-modal .swal2-confirm,
+    .workspace-modal .swal2-cancel,
+    .invite-modal .swal2-confirm,
+    .invite-modal .swal2-cancel {
+        padding: 7px 12px;
+        font-size: 0.75rem;
+        min-width: 60px;
+    }
+    
+    .workspace-list-actions {
+        opacity: 1; /* Mostrar siempre en móviles pequeños */
+    }
+    
+    .workspace-list-action-btn {
+        padding: 3px;
+        width: 22px;
+        height: 22px;
+    }
+    
+    .workspace-list-action-btn .action-icon {
+        width: 12px;
+        height: 12px;
+    }
+}
+
+/* Extra small mobile phones */
+@media (max-width: 320px) {
+    .workspace-list-container {
+        padding: 8px;
+        min-width: 280px;
+    }
+    
+    .workspace-list-header {
+        margin-bottom: 8px;
+    }
+    
+    .workspace-list-header h3 {
+        font-size: 12px;
+        margin: 0 0 0 30px;
+    }
+    
+    .create-workspace-btn {
+        padding: 3px;
+    }
+    
+    .btn-icon {
+        font-size: 12px;
+    }
+    
+    .search-bar {
+        margin-bottom: 8px;
+    }
+    
+    .search-bar .input {
+        padding: 4px 6px;
+        font-size: 11px;
+    }
+    
+    .workspace-list-item {
+        padding: 4px 6px;
+        gap: 4px;
+    }
+    
+    .workspace-list-item > :first-child {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .workspace-list-image {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .workspace-list-icon {
+        font-size: 14px;
+    }
+    
+    .workspace-list-name {
+        font-size: 11px;
+    }
+    
+    .workspace-list-role {
+        font-size: 9px;
+    }
+    
+    /* Modal responsive para móviles extra pequeños */
+    .workspace-modal.swal2-popup,
+    .invite-modal.swal2-popup {
+        max-width: 100vw;
+        margin: 0;
+        border-radius: 0;
+        height: 100vh;
+    }
+    
+    .workspace-modal .swal2-title,
+    .invite-modal .swal2-title {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .workspace-modal .swal2-html-container,
+    .invite-modal .swal2-html-container {
+        font-size: 0.85rem;
+    }
+    
+    .workspace-modal .swal2-input,
+    .invite-modal .swal2-input {
+        padding: 8px;
+        font-size: 0.8rem;
+        margin: 5px 0;
+    }
+    
+    .workspace-modal .swal2-confirm,
+    .workspace-modal .swal2-cancel,
+    .invite-modal .swal2-confirm,
+    .invite-modal .swal2-cancel {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        min-width: 55px;
+    }
+    
+    .workspace-list-action-btn {
+        padding: 2px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .workspace-list-action-btn .action-icon {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Button container responsiveness */
+.workspace-modal .swal2-actions,
+.invite-modal .swal2-actions {
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+@media (max-width: 420px) {
+    .workspace-modal .swal2-actions,
+    .invite-modal .swal2-actions {
+        justify-content: space-between;
+    }
+    
+    .workspace-modal .swal2-actions .swal2-confirm,
+    .workspace-modal .swal2-actions .swal2-cancel,
+    .invite-modal .swal2-actions .swal2-confirm,
+    .invite-modal .swal2-actions .swal2-cancel {
+        flex: 1;
+        margin: 2px;
+    }
 }

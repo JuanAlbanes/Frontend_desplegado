@@ -58,6 +58,14 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                 text: "No hay workspace seleccionado",
                 icon: "error",
                 confirmButtonColor: "#611f69",
+                customClass: {
+                    popup: 'responsive-modal',
+                    title: 'responsive-title',
+                    htmlContainer: 'responsive-content',
+                    confirmButton: 'responsive-button',
+                    cancelButton: 'responsive-button',
+                    input: 'responsive-input'
+                }
             })
             return
         }
@@ -65,11 +73,11 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
         Swal.fire({
             title: "Crear nuevo canal",
             html: `
-                <input id="channel-name" class="swal2-input" placeholder="Nombre del canal">
-                <input id="channel-description" class="swal2-input" placeholder="Descripción (opcional)">
-                <div style="text-align: left; margin: 10px 0;">
-                    <label>
-                        <input type="checkbox" id="channel-private" style="margin-right: 8px;">
+                <input id="channel-name" class="swal2-input responsive-input" placeholder="Nombre del canal">
+                <input id="channel-description" class="swal2-input responsive-input" placeholder="Descripción (opcional)">
+                <div class="checkbox-container">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="channel-private" class="responsive-checkbox">
                         Canal privado
                     </label>
                 </div>
@@ -79,6 +87,14 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
             showCancelButton: true,
             cancelButtonText: "Cancelar",
             background: "#ffffff",
+            customClass: {
+                popup: 'responsive-modal channel-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button',
+                input: 'responsive-input'
+            },
             preConfirm: () => {
                 const name = document.getElementById("channel-name").value
                 const description = document.getElementById("channel-description").value
@@ -110,6 +126,11 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                             icon: "success",
                             confirmButtonColor: "#611f69",
                             timer: 2000,
+                            customClass: {
+                                popup: 'responsive-modal',
+                                title: 'responsive-title',
+                                htmlContainer: 'responsive-content'
+                            }
                         })
                     } else {
                         throw new Error(response?.message || 'Error al crear el canal')
@@ -121,6 +142,11 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                         text: error.message || 'Error al crear el canal',
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }
@@ -131,11 +157,11 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
         Swal.fire({
             title: "Editar canal",
             html: `
-                <input id="channel-name" class="swal2-input" placeholder="Nombre del canal" value="${channel.name}">
-                <input id="channel-description" class="swal2-input" placeholder="Descripción (opcional)" value="${channel.description || ''}">
-                <div style="text-align: left; margin: 10px 0;">
-                    <label>
-                        <input type="checkbox" id="channel-private" style="margin-right: 8px;" ${channel.private ? 'checked' : ''}>
+                <input id="channel-name" class="swal2-input responsive-input" placeholder="Nombre del canal" value="${channel.name}">
+                <input id="channel-description" class="swal2-input responsive-input" placeholder="Descripción (opcional)" value="${channel.description || ''}">
+                <div class="checkbox-container">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="channel-private" class="responsive-checkbox" ${channel.private ? 'checked' : ''}>
                         Canal privado
                     </label>
                 </div>
@@ -145,6 +171,14 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
             showCancelButton: true,
             cancelButtonText: "Cancelar",
             background: "#ffffff",
+            customClass: {
+                popup: 'responsive-modal channel-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button',
+                input: 'responsive-input'
+            },
             preConfirm: () => {
                 const name = document.getElementById("channel-name").value
                 const description = document.getElementById("channel-description").value
@@ -176,6 +210,10 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                                 icon: "success",
                                 confirmButtonColor: "#611f69",
                                 timer: 1500,
+                                customClass: {
+                                    popup: 'responsive-modal',
+                                    title: 'responsive-title'
+                                }
                             })
                         } else {
                             throw new Error(response?.message || 'Error al actualizar el canal')
@@ -188,6 +226,11 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                         text: error.message,
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }
@@ -203,7 +246,14 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
             confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar"
+            cancelButtonText: "Cancelar",
+            customClass: {
+                popup: 'responsive-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button'
+            }
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
@@ -222,6 +272,10 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                                 icon: "success",
                                 confirmButtonColor: "#611f69",
                                 timer: 1500,
+                                customClass: {
+                                    popup: 'responsive-modal',
+                                    title: 'responsive-title'
+                                }
                             })
                         } else {
                             throw new Error(response?.message || 'Error al eliminar el canal')
@@ -234,6 +288,11 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
                         text: error.message,
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }

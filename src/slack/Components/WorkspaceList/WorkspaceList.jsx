@@ -25,14 +25,22 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
         Swal.fire({
             title: "Crear nuevo workspace",
             html: `
-                <input id="workspace-name" class="swal2-input" placeholder="Nombre del workspace">
-                <input id="workspace-image" class="swal2-input" placeholder="URL de imagen (opcional)">
+                <input id="workspace-name" class="swal2-input responsive-input" placeholder="Nombre del workspace">
+                <input id="workspace-image" class="swal2-input responsive-input" placeholder="URL de imagen (opcional)">
             `,
             confirmButtonText: "Crear",
             confirmButtonColor: "#611f69",
             showCancelButton: true,
             cancelButtonText: "Cancelar",
             background: "#ffffff",
+            customClass: {
+                popup: 'responsive-modal workspace-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button',
+                input: 'responsive-input'
+            },
             preConfirm: () => {
                 const name = document.getElementById("workspace-name").value
                 const url_image = document.getElementById("workspace-image").value
@@ -57,6 +65,10 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                                 icon: "success",
                                 confirmButtonColor: "#611f69",
                                 timer: 1500,
+                                customClass: {
+                                    popup: 'responsive-modal',
+                                    title: 'responsive-title'
+                                }
                             })
                         } else {
                             throw new Error(response?.message || 'Error al crear workspace')
@@ -68,6 +80,11 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                         text: error.message,
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }
@@ -82,14 +99,22 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
         Swal.fire({
             title: "Editar workspace",
             html: `
-                <input id="workspace-name" class="swal2-input" placeholder="Nombre del workspace" value="${workspace.name}">
-                <input id="workspace-image" class="swal2-input" placeholder="URL de imagen (opcional)" value="${workspace.url_image || ''}">
+                <input id="workspace-name" class="swal2-input responsive-input" placeholder="Nombre del workspace" value="${workspace.name}">
+                <input id="workspace-image" class="swal2-input responsive-input" placeholder="URL de imagen (opcional)" value="${workspace.url_image || ''}">
             `,
             confirmButtonText: "Guardar",
             confirmButtonColor: "#611f69",
             showCancelButton: true,
             cancelButtonText: "Cancelar",
             background: "#ffffff",
+            customClass: {
+                popup: 'responsive-modal workspace-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button',
+                input: 'responsive-input'
+            },
             preConfirm: () => {
                 const name = document.getElementById("workspace-name").value
                 const url_image = document.getElementById("workspace-image").value
@@ -115,6 +140,10 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                                 icon: "success",
                                 confirmButtonColor: "#611f69",
                                 timer: 1500,
+                                customClass: {
+                                    popup: 'responsive-modal',
+                                    title: 'responsive-title'
+                                }
                             })
                         } else {
                             throw new Error(response?.message || 'Error al actualizar workspace')
@@ -126,6 +155,11 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                         text: error.message,
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }
@@ -147,6 +181,13 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
             confirmButtonText: "Sí, eliminar",
             cancelButtonText: "Cancelar",
             background: "#ffffff",
+            customClass: {
+                popup: 'responsive-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button'
+            }
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
@@ -159,6 +200,10 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                                 icon: "success",
                                 confirmButtonColor: "#611f69",
                                 timer: 1500,
+                                customClass: {
+                                    popup: 'responsive-modal',
+                                    title: 'responsive-title'
+                                }
                             })
                         } else {
                             throw new Error(response?.message || 'Error al eliminar workspace')
@@ -170,6 +215,11 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                         text: error.message,
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }
@@ -184,14 +234,13 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
         Swal.fire({
             title: "Invitar miembro",
             html: `
-                <div class="invite-modal-content">
+                <div class="invite-modal-content responsive-content">
                     <p class="invite-description">Invitar a alguien a <strong>${workspace.name}</strong></p>
                     <input 
                         id="member-email" 
-                        class="swal2-input" 
+                        class="swal2-input responsive-input" 
                         placeholder="Email del invitado" 
                         type="email"
-                        style="margin-top: 15px;"
                     >
                     <p class="invite-note">Se enviará una invitación por email con un enlace para unirse</p>
                 </div>
@@ -201,7 +250,15 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
             showCancelButton: true,
             cancelButtonText: "Cancelar",
             background: "#ffffff",
-            width: "500px",
+            customClass: {
+                popup: 'responsive-modal invite-modal',
+                title: 'responsive-title',
+                htmlContainer: 'responsive-content',
+                confirmButton: 'responsive-button',
+                cancelButton: 'responsive-button',
+                input: 'responsive-input'
+            },
+            // ✅ CORREGIDO: Agregar preConfirm para capturar el email
             preConfirm: () => {
                 const email = document.getElementById("member-email").value
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -217,11 +274,12 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                 }
                 
                 return { email }
-            },
+            }
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
                     await sendRequest(async () => {
+                        // ✅ CORREGIDO: Usar result.value.email (ahora sí viene definido)
                         const response = await inviteMemberToWorkspace(
                             workspace._id,
                             result.value.email
@@ -234,6 +292,11 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                                 icon: "success",
                                 confirmButtonColor: "#611f69",
                                 timer: 3000,
+                                customClass: {
+                                    popup: 'responsive-modal',
+                                    title: 'responsive-title',
+                                    htmlContainer: 'responsive-content'
+                                }
                             })
                         } else {
                             throw new Error(response?.message || 'Error al enviar la invitación')
@@ -245,6 +308,11 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                         text: error.message,
                         icon: "error",
                         confirmButtonColor: "#611f69",
+                        customClass: {
+                            popup: 'responsive-modal',
+                            title: 'responsive-title',
+                            htmlContainer: 'responsive-content'
+                        }
                     })
                 }
             }

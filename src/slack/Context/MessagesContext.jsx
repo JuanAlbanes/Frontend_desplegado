@@ -1,5 +1,10 @@
 import { createContext, useState, useRef } from "react"
 import { getMessagesByChannel } from "../../services/messageService.js"
+import { 
+    addMessageToWorkspace, 
+    deleteMessageFromWorkspace, 
+    updateMessageInWorkspace 
+} from "../services/messagesService-slack.js" 
 
 export const MessagesContext = createContext({
     messages: [],
@@ -63,8 +68,7 @@ const MessagesContextProvider = ({ children }) => {
         if (last && last.workspace_id === workspace_id && last.channel_id === channel_id && last.text === text) return
 
         try {
-            // ✅ NOTA: Esta función necesita ser actualizada en messagesService-slack.js
-            // Por ahora mantenemos la llamada original
+            // ✅ CORREGIDO: Usar la función importada correctamente
             const newMessage = await addMessageToWorkspace(workspace_id, channel_id, text)
             if (newMessage) {
                 setMessages((prev) => [...prev, newMessage])
@@ -78,7 +82,7 @@ const MessagesContextProvider = ({ children }) => {
 
     const handleDeleteMessage = async (workspace_id, message_id) => {
         try {
-            // ✅ NOTA: Esta función necesita ser actualizada en messagesService-slack.js
+            // ✅ CORREGIDO: Usar la función importada correctamente
             const success = await deleteMessageFromWorkspace(workspace_id, message_id)
             if (success) {
                 setMessages((prev) => prev.filter((m) => 
@@ -94,7 +98,7 @@ const MessagesContextProvider = ({ children }) => {
 
     const handleUpdateMessage = async (workspace_id, message_id, newText) => {
         try {
-            // ✅ NOTA: Esta función necesita ser actualizada en messagesService-slack.js
+            // ✅ CORREGIDO: Usar la función importada correctamente
             const updatedMessage = await updateMessageInWorkspace(workspace_id, message_id, newText)
             if (updatedMessage) {
                 setMessages((prev) => 
