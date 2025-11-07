@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import useFetch from '../../hooks/useFetch.jsx'
 import useForm from '../../hooks/useForm.jsx'
 import { login } from '../../services/authService.js'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { Link } from 'react-router'
 import './LoginScreen.css'
 
@@ -11,14 +11,9 @@ const FORM_FIELDS = {
     PASSWORD: 'password'
 }
 
-const initial_form_state = {
-    [FORM_FIELDS.EMAIL]: '',
-    [FORM_FIELDS.PASSWORD]: ''
-}
-
 export const LoginScreen = () => {
-
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
 
     const {
         sendRequest,
@@ -26,6 +21,19 @@ export const LoginScreen = () => {
         response,
         error
     } = useFetch()
+
+    useEffect(() => {
+        const invitationWorkspaceId = searchParams.get('workspace_id')
+        const invitationEmail = searchParams.get('email')
+        const isFromInvitation = searchParams.get('invitation')
+        
+        console.log('🔍 Parámetros URL detectados:', {
+            invitationWorkspaceId,
+            invitationEmail,
+            isFromInvitation
+        })
+        
+    }, [searchParams])
 
     const onLogin = async (form_state) => {
         try {
@@ -38,19 +46,31 @@ export const LoginScreen = () => {
         }
     }
 
-    useEffect(
-        () => {
-            console.log('Login response:', response)
+    useEffect(() => {
+        console.log('📨 Login response:', response)
+        
+        if (response && response.ok === true) {
+            console.log('✅ Login exitoso')
             
-            if (response && response.ok === true) {
-                console.log('Login exitoso, redirigiendo...')
+            const invitationWorkspaceId = searchParams.get('workspace_id')
+            
+            if (invitationWorkspaceId) {
+                console.log('🎯 Redirigiendo al workspace invitado:', invitationWorkspaceId)
+                navigate(`/workspace/${invitationWorkspaceId}`)
+            } else {
+                console.log('🚀 Redirigiendo a workspace normal')
                 navigate('/workspace')
-            } else if (response && response.ok === false) {
-                console.log('Login fallido:', response.message)
             }
-        },
-        [response, navigate]
-    )
+            
+        } else if (response && response.ok === false) {
+            console.log('❌ Login fallido:', response.message)
+        }
+    }, [response, navigate, searchParams])
+
+    const initial_form_state = {
+        [FORM_FIELDS.EMAIL]: searchParams.get('email') || '',
+        [FORM_FIELDS.PASSWORD]: ''
+    }
 
     const {
         form_state: login_form_state,
@@ -70,6 +90,13 @@ export const LoginScreen = () => {
             </div>
             <div className='container-login'>
             <h1>Iniciar Sesión</h1>
+            
+            {searchParams.get('invitation') === 'success' && (
+                <div className="invitation-message">
+                    <p>🎉 ¡Invitación aceptada! Inicia sesión para acceder al workspace.</p>
+                </div>
+            )}
+            
             <form onSubmit={handleSubmit}>
                 <div className='container-email'>
                     <label htmlFor={FORM_FIELDS.EMAIL}>Email:</label>

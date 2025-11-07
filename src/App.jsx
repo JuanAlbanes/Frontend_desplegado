@@ -6,6 +6,7 @@ import AuthMiddleware from './Middlewares/AuthMiddlewares.jsx'
 import ChatScreen from './slack/Screens/ChatScreen/ChatScreen.jsx'
 import WorkspaceListScreen from './slack/Screens/WorkspaceListScreen/WorkspaceListScreen.jsx'
 import { ResetPasswordScreen } from './Screens/ResetPasswordScreen/ResetPasswordScreen.jsx'
+import ConfirmInvitation from './slack/Screens/ConfirmInvitation/ConfirmInvitation.jsx'
 
 function App() {
 
@@ -15,19 +16,16 @@ function App() {
       <Route path='/' element = {<RegisterScreen/>} />
       <Route path='/login' element={<LoginScreen/>} />
       <Route path='/register' element={<RegisterScreen/>} />
+      <Route path='/confirm-invitation/:token' element={<ConfirmInvitation/>} />
       <Route element={<AuthMiddleware/>}>
       <Route path='/home' element={<WorkspaceListScreen />}/>
       <Route path='/workspace' element={<WorkspaceListScreen />}/>
       <Route path='/workspace/:workspace_id' element = {<ChatScreen/>}/>
       </Route>
       <Route path='/reset-password' element={<ResetPasswordScreen/>} />
-      <Route path='/confirm-invitation/:token' element = {<RegisterScreen/>}/>
     </Routes>
 
   )
 }
 
 export default App
-
-
-
