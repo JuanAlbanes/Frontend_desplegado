@@ -3,7 +3,7 @@ import "./ChatHeader.css"
 import { FaArrowLeft } from "react-icons/fa6"
 import { IoChatbubbleEllipses, IoBusiness } from "react-icons/io5"
 import { useContext, useState, useEffect } from "react"
-import { MessagesContext } from "../../context/MessagesContext"
+import { MessagesContext } from "../../Context/MessagesContext"
 import { getChannelById } from "../../services/channelService"
 
 export default function ChatHeader({ workspace }) {
