@@ -21,6 +21,7 @@ function App() {
       <Route path='/workspace/:workspace_id' element = {<ChatScreen/>}/>
       </Route>
       <Route path='/reset-password' element={<ResetPasswordScreen/>} />
+      <Route path='/confirm-invitation/:token' element = {<RegisterScreen/>}/>
     </Routes>
 
   )
