@@ -5,7 +5,6 @@ import { getToken } from "../../services/authService.js"
 export async function getWorkspaceList() {
     const token = getToken()
     
-    // ✅ CORREGIDO: Mejor manejo de errores y logging
     if (!token) {
         console.error('No token found for workspace request')
         throw new Error('No autenticado')
@@ -25,13 +24,12 @@ export async function getWorkspaceList() {
 
         const response_data = await response_http.json()
         
-        console.log('Workspace list response:', response_data) // Para debug
+        console.log('Workspace list response:', response_data) 
 
         if (!response_http.ok) {
             throw new Error(response_data.message || `Error HTTP: ${response_http.status}`)
         }
 
-        // ✅ CORREGIDO: Aceptar diferentes estructuras de respuesta
         if (response_data.ok === false) {
             throw new Error(response_data.message || 'Error del servidor')
         }
@@ -87,13 +85,12 @@ export async function createWorkspace(name, url_image = "") {
     }
     
     try {
-        // ✅ CORREGIDO: Usar url_image en lugar de url_img
         const workspaceData = {
             name: name,
             url_image: url_image
         }
 
-        console.log('Creating workspace with data:', workspaceData) // Para debug
+        console.log('Creating workspace with data:', workspaceData) 
 
         const response_http = await fetch(
             `${ENVIRONMENT.URL_API}/api/workspaces`,
@@ -109,7 +106,7 @@ export async function createWorkspace(name, url_image = "") {
 
         const response_data = await response_http.json()
         
-        console.log('Create workspace response:', response_data) // Para debug
+        console.log('Create workspace response:', response_data)
 
         if (!response_http.ok) {
             throw new Error(response_data.message || `Error HTTP: ${response_http.status}`)

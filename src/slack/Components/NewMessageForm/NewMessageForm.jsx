@@ -17,7 +17,6 @@ export default function NewMessageForm() {
         const text = message.trim()
         if (!text) return
 
-        // Verificar que tenemos un canal seleccionado
         if (!currentChannelId) {
             alert("Por favor, selecciona un canal primero")
             return

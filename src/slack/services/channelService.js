@@ -17,7 +17,6 @@ export async function getChannelsByWorkspace(workspace_id) {
             }
         )
 
-        // Verificar si la respuesta es JSON válido
         const contentType = response_http.headers.get('content-type')
         if (!contentType || !contentType.includes('application/json')) {
             const textResponse = await response_http.text()
@@ -30,7 +29,6 @@ export async function getChannelsByWorkspace(workspace_id) {
             throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
         }
 
-        // ✅ CORREGIDO: Validar estructura de respuesta
         if (!response_data.ok) {
             throw new Error(response_data.message || 'Error en la respuesta del servidor')
         }
@@ -58,7 +56,6 @@ export async function getChannelById(workspace_id, channel_id) {
             }
         )
 
-        // Verificar si la respuesta es JSON válido
         const contentType = response_http.headers.get('content-type')
         if (!contentType || !contentType.includes('application/json')) {
             const textResponse = await response_http.text()
@@ -71,7 +68,6 @@ export async function getChannelById(workspace_id, channel_id) {
             throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
         }
 
-        // ✅ CORREGIDO: Validar estructura de respuesta
         if (!response_data.ok) {
             throw new Error(response_data.message || 'Error en la respuesta del servidor')
         }
@@ -107,7 +103,6 @@ export async function createChannel(name, description, workspace_id, isPrivate =
             }
         )
 
-        // Verificar si la respuesta es JSON válido
         const contentType = response_http.headers.get('content-type')
         if (!contentType || !contentType.includes('application/json')) {
             const textResponse = await response_http.text()
@@ -120,7 +115,6 @@ export async function createChannel(name, description, workspace_id, isPrivate =
             throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
         }
 
-        // ✅ CORREGIDO: Validar estructura de respuesta
         if (!response_data.ok) {
             throw new Error(response_data.message || 'Error en la respuesta del servidor')
         }
@@ -155,7 +149,6 @@ export async function updateChannel(workspace_id, channel_id, name, description,
             }
         )
 
-        // Verificar si la respuesta es JSON válido
         const contentType = response_http.headers.get('content-type')
         if (!contentType || !contentType.includes('application/json')) {
             const textResponse = await response_http.text()
@@ -168,7 +161,6 @@ export async function updateChannel(workspace_id, channel_id, name, description,
             throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
         }
 
-        // ✅ CORREGIDO: Validar estructura de respuesta
         if (!response_data.ok) {
             throw new Error(response_data.message || 'Error en la respuesta del servidor')
         }
@@ -196,7 +188,6 @@ export async function deleteChannel(workspace_id, channel_id) {
             }
         )
 
-        // Verificar si la respuesta es JSON válido
         const contentType = response_http.headers.get('content-type')
         if (!contentType || !contentType.includes('application/json')) {
             const textResponse = await response_http.text()
@@ -209,7 +200,6 @@ export async function deleteChannel(workspace_id, channel_id) {
             throw new Error(response_data.message || `Error ${response_http.status}: ${response_http.statusText}`)
         }
 
-        // ✅ CORREGIDO: Validar estructura de respuesta
         if (!response_data.ok) {
             throw new Error(response_data.message || 'Error en la respuesta del servidor')
         }

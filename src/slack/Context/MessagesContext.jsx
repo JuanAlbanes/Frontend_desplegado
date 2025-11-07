@@ -26,7 +26,6 @@ const MessagesContextProvider = ({ children }) => {
     const lastMessageRef = useRef(null)
 
     const loadMessages = async (workspace_id, channel_id) => {
-        // ✅ CORREGIDO: Validar que ambos IDs existen antes de hacer la llamada
         if (!workspace_id || !channel_id) {
             console.warn('❌ Missing workspace_id or channel_id:', { workspace_id, channel_id })
             setMessages([])
@@ -39,15 +38,13 @@ const MessagesContextProvider = ({ children }) => {
         setCurrentChannelId(channel_id)
         
         try {
-            // ✅ CORREGIDO: Usar la función correcta con ambos parámetros
             const response = await getMessagesByChannel(workspace_id, channel_id)
             
             if (response && response.ok && response.data && Array.isArray(response.data.messages)) {
-                // CORREGIDO: Normalizar los IDs para que todos los mensajes tengan tanto _id como id
                 const normalizedMessages = response.data.messages.map(message => ({
                     ...message,
-                    id: message.id || message._id, // Asegurar que siempre haya un campo `id`
-                    _id: message._id || message.id  // Asegurar que siempre haya un campo `_id`
+                    id: message.id || message._id, 
+                    _id: message._id || message.id 
                 }))
                 
                 setMessages(normalizedMessages)
@@ -68,7 +65,6 @@ const MessagesContextProvider = ({ children }) => {
         if (last && last.workspace_id === workspace_id && last.channel_id === channel_id && last.text === text) return
 
         try {
-            // ✅ CORREGIDO: Usar la función importada correctamente
             const newMessage = await addMessageToWorkspace(workspace_id, channel_id, text)
             if (newMessage) {
                 setMessages((prev) => [...prev, newMessage])
@@ -82,11 +78,9 @@ const MessagesContextProvider = ({ children }) => {
 
     const handleDeleteMessage = async (workspace_id, message_id) => {
         try {
-            // ✅ CORREGIDO: Usar la función importada correctamente
             const success = await deleteMessageFromWorkspace(workspace_id, message_id)
             if (success) {
                 setMessages((prev) => prev.filter((m) => 
-                    // CORREGIDO: Buscar por ambos campos _id e id
                     (m._id !== message_id && m.id !== message_id)
                 ))
             }
@@ -98,12 +92,10 @@ const MessagesContextProvider = ({ children }) => {
 
     const handleUpdateMessage = async (workspace_id, message_id, newText) => {
         try {
-            // ✅ CORREGIDO: Usar la función importada correctamente
             const updatedMessage = await updateMessageInWorkspace(workspace_id, message_id, newText)
             if (updatedMessage) {
                 setMessages((prev) => 
                     prev.map((m) => 
-                        // CORREGIDO: Buscar por ambos campos _id e id
                         ((m._id === message_id || m.id === message_id) ? updatedMessage : m)
                     )
                 )

@@ -231,7 +231,6 @@
     flex-shrink: 0;
 }
 
-/* ===== RESPONSIVE MODALS PARA WORKSPACES ===== */
 .workspace-modal.swal2-popup,
 .invite-modal.swal2-popup {
     max-width: 95vw;
@@ -303,7 +302,6 @@
     background-color: #4b5563;
 }
 
-/* Invite modal specific styles */
 .invite-modal .invite-modal-content {
     text-align: center;
 }
@@ -321,9 +319,7 @@
     font-style: italic;
 }
 
-/* ===== MEDIA QUERIES PARA WORKSPACE MODALS ===== */
 
-/* Tablets and small screens */
 @media (max-width: 768px) {
     .workspace-modal.swal2-popup,
     .invite-modal.swal2-popup {
@@ -352,7 +348,6 @@
     }
 }
 
-/* Mobile phones */
 @media (max-width: 540px) {
     .workspace-list-container {
         padding: 12px;
@@ -407,7 +402,6 @@
         height: 14px;
     }
     
-    /* Modal responsive para móviles */
     .workspace-modal.swal2-popup,
     .invite-modal.swal2-popup {
         max-width: 95vw;
@@ -452,7 +446,7 @@
     }
 }
 
-/* Small mobile phones */
+
 @media (max-width: 420px) {
     .workspace-list-container {
         padding: 10px;
@@ -507,7 +501,6 @@
         font-size: 10px;
     }
     
-    /* Modal responsive para móviles pequeños */
     .workspace-modal.swal2-popup,
     .invite-modal.swal2-popup {
         max-width: 98vw;
@@ -535,7 +528,7 @@
     }
     
     .workspace-list-actions {
-        opacity: 1; /* Mostrar siempre en móviles pequeños */
+        opacity: 1; 
     }
     
     .workspace-list-action-btn {
@@ -550,7 +543,6 @@
     }
 }
 
-/* Extra small mobile phones */
 @media (max-width: 320px) {
     .workspace-list-container {
         padding: 8px;
@@ -610,7 +602,6 @@
         font-size: 9px;
     }
     
-    /* Modal responsive para móviles extra pequeños */
     .workspace-modal.swal2-popup,
     .invite-modal.swal2-popup {
         max-width: 100vw;
@@ -658,7 +649,6 @@
     }
 }
 
-/* Button container responsiveness */
 .workspace-modal .swal2-actions,
 .invite-modal .swal2-actions {
     flex-wrap: wrap;

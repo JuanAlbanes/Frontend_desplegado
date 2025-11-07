@@ -2,7 +2,6 @@ import { getMessagesByChannel, sendMessage, updateMessage, deleteMessage } from 
 
 export const getMessagesByWorkspaceId = async (workspace_id, channel_id) => {
     try {
-        // ✅ CORREGIDO: Pasar ambos parámetros workspace_id y channel_id
         const response = await getMessagesByChannel(workspace_id, channel_id)
         
         if (response && response.data && Array.isArray(response.data.messages)) {
@@ -19,14 +18,12 @@ export const getMessagesByWorkspaceId = async (workspace_id, channel_id) => {
 
 export const addMessageToWorkspace = async (workspace_id, channel_id, text) => {
     try {
-        // ✅ NOTA: sendMessage solo necesita channel_id (no cambió)
         const response = await sendMessage(channel_id, text)
         
         if (response && response.data && response.data.message) {
-            // Formatear la respuesta para que coincida con la estructura esperada
             const newMessage = {
                 id: response.data.message._id,
-                _id: response.data.message._id, // ✅ Agregar _id también
+                _id: response.data.message._id, 
                 emisor: response.data.message.user?.name || "Usuario",
                 hora: new Date(response.data.message.created_at).toLocaleTimeString("es-ES", {
                     hour: "2-digit",
@@ -36,7 +33,7 @@ export const addMessageToWorkspace = async (workspace_id, channel_id, text) => {
                 status: "enviado",
                 isMyMessage: true,
                 created_at: response.data.message.created_at,
-                user_id: response.data.message.user?._id // ✅ Agregar user_id para las validaciones
+                user_id: response.data.message.user?._id 
             }
             
             return newMessage
@@ -51,7 +48,6 @@ export const addMessageToWorkspace = async (workspace_id, channel_id, text) => {
 
 export const deleteMessageFromWorkspace = async (workspace_id, message_id) => {
     try {
-        // ✅ NOTA: deleteMessage solo necesita message_id (no cambió)
         const response = await deleteMessage(message_id)
         
         if (response && response.ok) {
@@ -67,13 +63,12 @@ export const deleteMessageFromWorkspace = async (workspace_id, message_id) => {
 
 export const updateMessageInWorkspace = async (workspace_id, message_id, newText) => {
     try {
-        // ✅ NOTA: updateMessage solo necesita message_id (no cambió)
         const response = await updateMessage(message_id, newText)
         
         if (response && response.data && response.data.message) {
             const updatedMessage = {
                 id: response.data.message._id,
-                _id: response.data.message._id, // ✅ Agregar _id también
+                _id: response.data.message._id,
                 emisor: response.data.message.user?.name || "Usuario",
                 hora: new Date(response.data.message.created_at).toLocaleTimeString("es-ES", {
                     hour: "2-digit",
@@ -83,7 +78,7 @@ export const updateMessageInWorkspace = async (workspace_id, message_id, newText
                 status: "editado",
                 isMyMessage: true,
                 created_at: response.data.message.created_at,
-                user_id: response.data.message.user?._id // ✅ Agregar user_id para las validaciones
+                user_id: response.data.message.user?._id 
             }
             
             return updatedMessage

@@ -31,7 +31,6 @@ const UserContextProvider = ({ children }) => {
         }
     }
 
-    // Cargar usuario al iniciar
     useEffect(() => {
         loadCurrentUser()
     }, [])

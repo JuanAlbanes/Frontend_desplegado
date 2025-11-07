@@ -14,13 +14,11 @@ const WorkspaceContextProvider = ({ children }) => {
     const [workspaces, setWorkspaces] = useState([])
     const [isLoadingWorkspaces, setIsLoadingWorkspaces] = useState(true)
 
-    // ✅ CORREGIDO: Usar useCallback para evitar recreación en cada render
     const loadWorkspaces = useCallback(async () => {
         try {
             setIsLoadingWorkspaces(true)
             const response = await getWorkspaceList()
             
-            // Manejar diferentes estructuras de respuesta
             if (response && response.data && response.data.workspaces) {
                 setWorkspaces(response.data.workspaces)
             } else if (response && response.workspaces) {
@@ -37,10 +35,9 @@ const WorkspaceContextProvider = ({ children }) => {
         }
     }, [])
 
-    // Cargar workspaces al montar el contexto
     useEffect(() => {
         loadWorkspaces()
-    }, [loadWorkspaces]) // ✅ Ahora loadWorkspaces es estable
+    }, [loadWorkspaces]) 
 
     const handleAddWorkspace = async (name, url_image = "") => {
         try {

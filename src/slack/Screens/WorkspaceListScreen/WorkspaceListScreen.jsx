@@ -10,7 +10,6 @@ export default function WorkspaceListScreen() {
     const { isLoadingWorkspaces, workspaces, loadWorkspaces } = useContext(WorkspaceContext)
     const navigate = useNavigate()
 
-    // ✅ CORREGIDO: Mejorar la carga de workspaces
     useEffect(() => {
         const initializeWorkspaces = async () => {
             try {
@@ -24,7 +23,6 @@ export default function WorkspaceListScreen() {
     }, [loadWorkspaces])
 
     const handleWorkspaceSelect = (workspace) => {
-        // ✅ CORREGIDO: Usar _id en lugar de id (Mongoose usa _id)
         if (workspace && workspace._id) {
             navigate(`/workspace/${workspace._id}`)
         } else {
@@ -40,7 +38,7 @@ export default function WorkspaceListScreen() {
             <div className="sidebar-workspace-list">
                 <WorkspaceList 
                     onWorkspaceSelect={handleWorkspaceSelect} 
-                    currentWorkspaceId={null} // No hay workspace seleccionado en esta pantalla
+                    currentWorkspaceId={null} 
                 />
             </div>
         </div>
@@ -63,14 +61,12 @@ export default function WorkspaceListScreen() {
                 <h1>Selecciona un workspace para comenzar</h1>
                 <p>Elige uno de la sidebar o crea uno nuevo</p>
                 
-                {/* ✅ CORREGIDO: Mensaje mejorado cuando no hay workspaces */}
                 {workspaces && workspaces.length === 0 && (
                     <div className="no-workspaces-message">
                         <p>No tienes workspaces aún. ¡Crea uno nuevo usando el botón "+" en la sidebar!</p>
                     </div>
                 )}
                 
-                {/* ✅ AÑADIDO: Debug info para desarrollo */}
                 {process.env.NODE_ENV === 'development' && (
                     <div style={{ marginTop: '20px', fontSize: '12px', color: '#666' }}>
                         <p> {workspaces ? workspaces.length : 0} workspaces cargados</p>

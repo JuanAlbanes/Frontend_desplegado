@@ -12,7 +12,6 @@ export default function ChatHeader({ workspace }) {
     const [currentChannel, setCurrentChannel] = useState(null)
     const [loadingChannel, setLoadingChannel] = useState(false)
 
-    // Cargar información del canal cuando cambie currentChannelId
     useEffect(() => {
         if (currentChannelId && workspace_id) {
             loadChannelInfo(workspace_id, currentChannelId)
@@ -24,7 +23,6 @@ export default function ChatHeader({ workspace }) {
     const loadChannelInfo = async (workspaceId, channelId) => {
         setLoadingChannel(true)
         try {
-            // ✅ CORREGIDO: Pasar ambos parámetros workspaceId y channelId
             const response = await getChannelById(workspaceId, channelId)
             if (response.data && response.data.channel) {
                 setCurrentChannel(response.data.channel)
@@ -55,8 +53,7 @@ export default function ChatHeader({ workspace }) {
             <Link to="/home" className="btn-back">
                 <FaArrowLeft />
             </Link>
-            
-            {/* MOSTRAR IMAGEN DEL WORKSPACE O ICONO POR DEFECTO */}
+
             <div className="workspace-header-icon">
                 {workspace.url_image ? (
                     <img 
@@ -64,7 +61,6 @@ export default function ChatHeader({ workspace }) {
                         alt={workspace.name}
                         className="workspace-header-image"
                         onError={(e) => {
-                            // Si la imagen falla al cargar, mostrar el icono por defecto
                             e.target.style.display = 'none'
                         }}
                     />

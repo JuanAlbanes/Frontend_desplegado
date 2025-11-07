@@ -34,7 +34,6 @@ export const LoginScreen = () => {
                 form_state[FORM_FIELDS.PASSWORD]
             ))
         } catch (error) {
-            // El error ya se maneja en useFetch, pero podemos agregar logging adicional
             console.error('Login error:', error)
         }
     }
@@ -43,11 +42,8 @@ export const LoginScreen = () => {
         () => {
             console.log('Login response:', response)
             
-            // ✅ CORREGIDO: Mejor verificación de respuesta exitosa
             if (response && response.ok === true) {
                 console.log('Login exitoso, redirigiendo...')
-                // El token ya se guardó automáticamente en authService.js
-                // Redirigir a la página principal de workspaces
                 navigate('/workspace')
             } else if (response && response.ok === false) {
                 console.log('Login fallido:', response.message)

@@ -6,7 +6,6 @@
     display: block;
 }
 
-/* ✅ ESTILOS ESPECÍFICOS para WorkspaceItem (componente individual) */
 .workspace-detail-item {
     padding: 16px 12px;
     margin-bottom: 8px;

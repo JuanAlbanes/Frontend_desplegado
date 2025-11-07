@@ -127,7 +127,7 @@
     font-size: 16px;
 }
 
-/* NUEVOS ESTILOS PARA ACCIONES DE CANAL */
+
 .channel-actions {
     display: flex;
     gap: 4px;
@@ -166,7 +166,6 @@
     background: #ffe6e6;
 }
 
-/* ===== RESPONSIVE MODALS PARA CHANNELS ===== */
 .channel-modal.swal2-popup {
     max-width: 95vw;
     margin: 10px;
@@ -228,7 +227,6 @@
     background-color: #4b5563;
 }
 
-/* Checkbox styles for channel modals */
 .checkbox-container {
     text-align: left;
     margin: 15px 0 5px 0;
@@ -247,9 +245,8 @@
     transform: scale(1.1);
 }
 
-/* ===== MEDIA QUERIES PARA CHANNEL MODALS ===== */
 
-/* Tablets and small screens */
+
 @media (max-width: 768px) {
     .channel-modal.swal2-popup {
         max-width: 90vw;
@@ -273,7 +270,6 @@
     }
 }
 
-/* Mobile phones */
 @media (max-width: 540px) {
     .channel-list-header {
         padding: 12px;
@@ -313,7 +309,6 @@
         font-size: 11px;
     }
     
-    /* Modal responsive para móviles */
     .channel-modal.swal2-popup {
         max-width: 95vw;
         margin: 10px;
@@ -353,7 +348,6 @@
     }
 }
 
-/* Small mobile phones */
 @media (max-width: 420px) {
     .channel-list-header {
         padding: 10px;
@@ -381,7 +375,6 @@
         padding: 5px 10px;
     }
     
-    /* Modal responsive para móviles pequeños */
     .channel-modal.swal2-popup {
         max-width: 98vw;
         margin: 5px;
@@ -404,7 +397,7 @@
     }
     
     .channel-actions {
-        opacity: 1; /* Mostrar siempre en móviles pequeños */
+        opacity: 1; 
     }
     
     .channel-action-btn {
@@ -413,7 +406,6 @@
     }
 }
 
-/* Extra small mobile phones */
 @media (max-width: 320px) {
     .channel-list-container {
         min-width: 280px;
@@ -457,7 +449,6 @@
         font-size: 10px;
     }
     
-    /* Modal responsive para móviles extra pequeños */
     .channel-modal.swal2-popup {
         max-width: 100vw;
         margin: 0;
@@ -497,7 +488,6 @@
     }
 }
 
-/* Button container responsiveness */
 .channel-modal .swal2-actions {
     flex-wrap: wrap;
     gap: 5px;

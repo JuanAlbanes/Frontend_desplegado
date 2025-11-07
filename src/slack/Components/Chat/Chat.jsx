@@ -8,18 +8,15 @@ export default function Chat() {
     const { messages, isMessagesLoading, currentChannelId, workspaceId, loadMessages } = useContext(MessagesContext)
     const { currentUser } = useContext(UserContext)
 
-    // ✅ ACTUALIZADO: Cargar mensajes cuando cambie el canal o workspace
     useEffect(() => {
         if (workspaceId && currentChannelId) {
             loadMessages(workspaceId, currentChannelId)
         }
     }, [workspaceId, currentChannelId, loadMessages])
 
-    // Función para determinar si el mensaje es del usuario actual
     const isMyMessage = (message) => {
         if (!currentUser) return false
         
-        // Diferentes formas en que el backend puede identificar el usuario
         return  currentUser._id === message.user_id || 
                 currentUser._id === message.user?._id ||
                 currentUser._id === message.emisor_id ||

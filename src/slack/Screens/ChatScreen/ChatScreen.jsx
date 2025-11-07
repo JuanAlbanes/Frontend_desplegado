@@ -20,23 +20,19 @@ export default function ChatScreen() {
     const [error, setError] = useState(null)
     const [workspaceName, setWorkspaceName] = useState(null)
 
-    // Función para encontrar el nombre del workspace
     const getWorkspaceName = (workspaceId) => {
         if (!workspaceId || workspaces.length === 0) return null;
         
-        // Buscar en diferentes estructuras posibles
         const foundWorkspace = workspaces.find(ws => {
-            // Caso 1: workspace directo
             if (ws._id === workspaceId) return true;
-            // Caso 2: nested en propiedad workspace
+
             if (ws.workspace && ws.workspace._id === workspaceId) return true;
-            // Caso 3: propiedad workspace_id
+
             if (ws.workspace_id === workspaceId) return true;
             return false;
         });
 
         if (foundWorkspace) {
-            // Extraer el nombre de diferentes estructuras posibles
             return  foundWorkspace.name || 
                     foundWorkspace.workspace?.name || 
                     foundWorkspace.workspace_name;
@@ -45,33 +41,26 @@ export default function ChatScreen() {
         return null;
     };
 
-    // FUNCIÓN NUEVA MEJORADA: Encontrar el workspace completo
     const getCurrentWorkspace = () => {
         if (!workspace_id || workspaces.length === 0) return null;
         
         const foundWorkspace = workspaces.find(ws => {
-            // Caso 1: workspace directo
             if (ws._id === workspace_id) return true;
-            // Caso 2: nested en propiedad workspace
             if (ws.workspace && ws.workspace._id === workspace_id) return true;
-            // Caso 3: propiedad workspace_id
             if (ws.workspace_id === workspace_id) return true;
             return false;
         });
 
         if (foundWorkspace) {
-            // Si el workspace está nested, devolver la propiedad workspace
             if (foundWorkspace.workspace && foundWorkspace.workspace._id === workspace_id) {
                 return foundWorkspace.workspace;
             }
-            // Si es directo, devolver el workspace completo
             return foundWorkspace;
         }
         
         return null;
     };
 
-    // Cargar workspaces si no están cargados
     useEffect(() => {
         if (workspaces.length === 0 && loadWorkspaces) {
             loadWorkspaces().catch(err => {
@@ -81,7 +70,6 @@ export default function ChatScreen() {
         }
     }, [workspaces.length, loadWorkspaces])
 
-    // Actualizar el nombre del workspace cuando cambien los parámetros
     useEffect(() => {
         if (workspace_id) {
             const name = getWorkspaceName(workspace_id);
@@ -91,7 +79,6 @@ export default function ChatScreen() {
         }
     }, [workspace_id, workspaces])
 
-    // Forzar cambio a pestaña de workspaces cuando no hay workspace_id
     useEffect(() => {
         if (!workspace_id && activeTab === 'channels') {
             setActiveTab('workspaces')
@@ -114,7 +101,6 @@ export default function ChatScreen() {
         setError(null)
     }
 
-    // Obtener el workspace actual usando la nueva función
     const currentWorkspace = getCurrentWorkspace();
 
     const sidebarContent = (
@@ -175,7 +161,6 @@ export default function ChatScreen() {
         </div>
     )
 
-    // ✅ CORREGIDO: Spinner solo en el área de chat, no en toda la pantalla
     if (isMessagesLoading && currentChannelId) {
         return (
             <SlackLayout sidebarContent={sidebarContent}>
@@ -190,7 +175,6 @@ export default function ChatScreen() {
     return (
         <SlackLayout sidebarContent={sidebarContent}>
             <div className="chat-screen">
-                {/* CAMBIO CLAVE AQUÍ: Pasar el workspace usando la nueva función */}
                 <ChatHeader workspace={currentWorkspace} />
                 
                 {currentChannelId ? (

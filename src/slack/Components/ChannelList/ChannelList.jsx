@@ -12,7 +12,7 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
     const [searchChannel, setSearchChannel] = useState("")
     const { loading, error, sendRequest } = useFetch()
 
-    // ✅ CORRECCIÓN CRÍTICA: Limpiar inmediatamente cuando workspaceId cambia
+    
     useEffect(() => {
         console.log('🔄 Workspace ID cambiado, limpiando canales:', workspaceId, 'Nombre:', workspaceName)
         setChannels([])
@@ -30,7 +30,6 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
             console.log('📡 Loading channels for workspace:', workspaceId, '(', workspaceName, ')')
             const response = await getChannelsByWorkspace(workspaceId)
             
-            // ✅ Validación más estricta
             if (response && response.ok && response.data && Array.isArray(response.data.channels)) {
                 console.log('✅ Channels loaded for workspace', workspaceName, ':', response.data.channels.length, 'canales')
                 setChannels(response.data.channels)
@@ -193,15 +192,13 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
             if (result.isConfirmed) {
                 try {
                     await sendRequest(async () => {
-                        // ✅ ACTUALIZADO: Agregar workspaceId a updateChannel
                         const response = await updateChannel(
-                            workspaceId, // ← Nuevo parámetro
+                            workspaceId, 
                             channel._id,
                             result.value.name, 
                             result.value.description, 
                             result.value.isPrivate
                         )
-                        // ✅ CORREGIDO: Validación mejorada de respuesta
                         if (response && response.ok) {
                             await loadChannels(workspaceId)
                             
@@ -258,12 +255,10 @@ export default function ChannelList({ workspaceId, workspaceName, onChannelSelec
             if (result.isConfirmed) {
                 try {
                     await sendRequest(async () => {
-                        // ✅ ACTUALIZADO: Agregar workspaceId a deleteChannel
                         const response = await deleteChannel(
-                            workspaceId, // ← Nuevo parámetro
+                            workspaceId,
                             channel._id
                         )
-                        // ✅ CORREGIDO: Validación mejorada de respuesta
                         if (response && response.ok) {
                             await loadChannels(workspaceId)
                             

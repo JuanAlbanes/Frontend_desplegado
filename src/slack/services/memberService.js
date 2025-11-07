@@ -1,4 +1,3 @@
-// src/slack/services/memberService.js
 import ENVIRONMENT from "../../config/environment.js"
 import { CONTENT_TYPE_VALUES, HEADERS, HTTP_METHODS } from "../../constants/http.js"
 import { getToken } from "../../services/authService.js"

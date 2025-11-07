@@ -4,8 +4,6 @@ import { inviteMemberToWorkspace } from '../../services/memberService'
 import { WorkspaceContext } from '../../Context/WorkspaceContext'
 import useFetch from '../../../hooks/useFetch'
 import './WorkspaceList.css'
-
-// ✅ ICONOS
 import { IoAdd, IoBusiness, IoSettings, IoTrash, IoPersonAdd } from "react-icons/io5"
 
 import Swal from 'sweetalert2'
@@ -258,7 +256,6 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                 cancelButton: 'responsive-button',
                 input: 'responsive-input'
             },
-            // ✅ CORREGIDO: Agregar preConfirm para capturar el email
             preConfirm: () => {
                 const email = document.getElementById("member-email").value
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -279,7 +276,6 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
             if (result.isConfirmed) {
                 try {
                     await sendRequest(async () => {
-                        // ✅ CORREGIDO: Usar result.value.email (ahora sí viene definido)
                         const response = await inviteMemberToWorkspace(
                             workspace._id,
                             result.value.email
@@ -384,14 +380,12 @@ export default function WorkspaceList({ onWorkspaceSelect, currentWorkspaceId })
                                 className={`workspace-list-item ${isActive ? 'active' : ''}`}
                                 onClick={() => handleWorkspaceClick(workspaceItem)}
                             >
-                                {/* Mostrar imagen si existe, sino mostrar icono por defecto */}
                                 {workspace.url_image ? (
                                     <img 
                                         src={workspace.url_image} 
                                         alt={workspace.name}
                                         className="workspace-list-image"
                                         onError={(e) => {
-                                            // Si la imagen falla al cargar, mostrar el icono por defecto
                                             e.target.style.display = 'none'
                                             e.target.nextSibling.style.display = 'block'
                                         }}
